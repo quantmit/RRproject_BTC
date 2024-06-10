@@ -702,4 +702,12 @@ train(model, X_train, y_train, epochs = 10, lr = 0.001)
 # Prepare test data for prediction
 X_test <- array(testing_set[-length(testing_set)], dim = c(length(testing_set) - 1, 1, 1))
 
+
+# Make predictions
+predictions <- predict_lstm(model, X_test)
+
+# Rescale predictions to original scale
+predictions_rescaled <- predictions * scaled_train$std + scaled_train$mean
+actual_rescaled <- testing_set[-1] * scaled_train$std + scaled_train$mean
+
 ```
