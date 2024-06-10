@@ -173,3 +173,45 @@ summary(data)
 | head(data)                                                                        | print(data.head())                                                                     |
 | `|`                                                                               |                                                                                        |
 
+### Comments on Differences:
+
+1.  **Library Usage**:
+    -   R uses `dplyr` for data manipulation and `zoo` for forward filling.
+    -   Python uses `pandas` for both data manipulation and forward filling.
+2.  **NA Replacement**:
+    -   In R, `ifelse` within `mutate` is used to replace NA values.
+    -   In Python, `fillna` is used directly on the DataFrame columns.
+3.  **Forward Filling**:
+    -   R uses `zoo::na.locf` to forward fill values.
+    -   Python uses `fillna(method='ffill')` for forward filling.
+4.  **Timestamp Conversion**:
+    -   R uses `as.POSIXct` to convert numeric Unix timestamps.
+    -   Python uses `pd.to_datetime` with `unit='s'` and `utc=True` to achieve the same.
+
+### Handling missing values
+
+-   From the code below we fill in missing values in the Open High Low and Close columns and replace NAs with the previous value from the one above it.
+
+-   This approach, in the beginning, helps to maintain the continuity of data without losing important rows of the data in other columns.
+
+```{r}
+# Fill NA values with zeroes for volume/trade-related fields using dplyr's mutate function
+data <- data %>%
+  mutate(`Volume_(BTC)` = ifelse(is.na(`Volume_(BTC)`), 0, `Volume_(BTC)`),  # Replace NA with 0 in 'Volume_(BTC)'
+         `Volume_(Currency)` = ifelse(is.na(`Volume_(Currency)`), 0, `Volume_(Currency)`),  # Replace NA with 0 in 'Volume_(Currency)'
+         Weighted_Price = ifelse(is.na(Weighted_Price), 0, Weighted_Price))  # Replace NA with 0 in 'Weighted_Price'
+
+# Fill forward NA values (last observation carried forward) for OHLC data using zoo's na.locf function
+data$Open <- zoo::na.locf(data$Open)    # Fill NA values in 'Open' column
+data$High <- zoo::na.locf(data$High)    # Fill NA values in 'High' column
+data$Low <- zoo::na.locf(data$Low)      # Fill NA values in 'Low' column
+data$Close <- zoo::na.locf(data$Close)  # Fill NA values in 'Close' column
+
+# Convert 'Timestamp' column from numeric Unix timestamps to POSIXct date-time objects in UTC timezone
+data <- data %>%
+  mutate(Timestamp = as.POSIXct(Timestamp, origin = "1970-01-01", tz = "UTC"))
+
+# Display the first few rows of the updated dataframe 'data'
+#head(data)
+```
+
