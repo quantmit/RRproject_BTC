@@ -356,3 +356,23 @@ There is a cluster of Volumes at specific prices.
 
 These two plots are simmilar making both languages easier to handle for this kind of plot.
 
+
+```{r}
+library(plotly)     # Load the plotly package for interactive plots
+library(dplyr)      # Load the dplyr package for data manipulation
+library(lubridate)  # Load the lubridate package for handling date/time data
+
+# Create the trace for BTC Volume vs USD
+trace <- plot_ly(data = weekly_rows, x = ~Weighted_Price, y = ~`Volume_(BTC)`, 
+                 type = 'scattergl', mode = 'markers', marker = list(color = '#FFBAD2', line = list(width = 1)))
+
+# Update layout with title and axis labels
+fig3 <- trace %>% layout(
+  title = 'BTC Volume vs USD',  # Set the title of the plot
+  xaxis = list(title = 'Weighted Price', titlefont = list(family = 'Courier New, monospace', size = 18, color = '#7f7f7f')),  # Set x-axis title and formatting
+  yaxis = list(title = 'Volume BTC', titlefont = list(family = 'Courier New, monospace', size = 18, color = '#7f7f7f'))  # Set y-axis title and formatting
+)
+
+# Plot the figure
+fig3
+```
