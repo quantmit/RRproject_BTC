@@ -112,3 +112,15 @@ data <- data %>%
 #head(data)
 
 ```
+
+
+
+### Summary Statistics
+
+Summary statistics display the minimum and maximum values, explaining the range.
+They also include the 1st quantile (Q1), median (Q2), and third quantile (Q3), which elaborate on the interquartile range.
+The summary also highlights the total number of missing variables in each column.
+
+```{r}
+summary(data)
+```
