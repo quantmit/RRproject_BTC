@@ -450,3 +450,37 @@ Here's the mathematical formulation of the LSTM model:
 -   **Sigmoid Activation (σ)**: Scales input values between 0 and 1, controlling the flow of information through gates.
 -   **Hyperbolic Tangent (tanh)**: Squashes input values between -1 and 1, regulating the cell state update and output.
 
+
+### Data importaion
+
+This segment is same as the previous codes here now we start omitting the missing values to help in making the analysis more concrete.
+
+```{r, message=FALSE}
+data <- read_csv("~/Git/Data/bitstampUSD_1-min_data_2012-01-01_to_2018-11-11.csv")  # Read CSV data into 'data' dataframe
+data <- data %>% 
+  mutate(Timestamp = as.POSIXct(Timestamp, origin = "1970-01-01", tz = "UTC"))  # Convert 'Timestamp' to POSIXct with UTC timezone
+
+# Define a function to convert Unix timestamp to datetime with UTC timezone
+dateparse <- function(time_in_secs) {
+  as.POSIXct(time_in_secs, origin = "1970-01-01", tz = "UTC")
+}
+
+# Parse the 'Timestamp' column using 'dateparse' function
+data <- data %>% 
+  mutate(Timestamp = dateparse(Timestamp))
+
+# Group by hour and take the first value in each group
+data <- data %>% 
+  mutate(Timestamp = floor_date(Timestamp, unit = "hour")) %>%  # Floor 'Timestamp' to the nearest hour
+  group_by(Timestamp) %>%  # Group by 'Timestamp'
+  slice(1) %>%  # Take the first row from each group
+  ungroup() %>%  # Ungroup the data
+  select(Timestamp, Weighted_Price)  # Select 'Timestamp' and 'Weighted_Price' columns
+
+
+data <- data %>% 
+  fill(Weighted_Price)  
+
+# Print the first few rows of the dataframe
+#head(data)  # Display the first few rows of 'data'
+```
