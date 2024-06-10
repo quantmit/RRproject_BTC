@@ -240,3 +240,50 @@ weekly_rows <- filtered_data %>%
 #head(weekly_rows)
 
 ```
+
+
+
+## Vizualizations
+
+### Let's visualize Historical Bitcoin Market Volume (2015-2018)-Yearly
+
+In the code below we utilize the plotly function from the plotly package to create an interactive plot.
+The interactive plot takes in arguments of labels for 1 month 6month and 12 months to make the widgets more interactive.
+
+#### Comparison of the python plot and R plot
+
+![python output](newplot2.png) ![R output](newplot.png)
+
+The Python output doesn't distinguish the open-closed and weighted_price clearly in the plot.
+Although the plots interactively match that of R programming, we see a superiority of the R language in handling the visualizations in a more versatile manner by creating multiple facets for each column while still maintaining the same x and y axis. The plots on the other hand show a rising trend in Bitcoin and a drop in 2018 onwards.
+
+```{r}
+# Create the traces for each line plot
+trace1 <- plot_ly(data = weekly_rows, x = ~Timestamp, y = ~Open, type = 'scatter', mode = 'lines', name = 'Open')
+trace2 <- plot_ly(data = weekly_rows, x = ~Timestamp, y = ~Close, type = 'scatter', mode = 'lines', name = 'Close')
+trace3 <- plot_ly(data = weekly_rows, x = ~Timestamp, y = ~Weighted_Price, type = 'scatter', mode = 'lines', name = 'Weighted Avg')
+
+# Combine the traces into a subplot with shared axes
+fig <- subplot(trace1, trace2, trace3, nrows = 1, shareX = TRUE, shareY = TRUE)
+
+# Update the layout of the plot with title, x-axis options, and range slider
+fig1 <- fig %>% layout(
+  title = 'Historical Bitcoin Prices (2015-2018) with the Slider',  # Set the title of the plot
+  xaxis = list(
+    rangeselector = list(
+      buttons = list(
+        list(count = 1, label = '1m', step = 'month', stepmode = 'backward'),  # Button for 1 month range
+        list(count = 6, label = '6m', step = 'month', stepmode = 'backward'),  # Button for 6 months range
+        list(count = 12, label = '1y', step = 'month', stepmode = 'backward'),  # Button for 1 year range
+        list(count = 36, label = '3y', step = 'month', stepmode = 'backward'),  # Button for 3 years range
+        list(step = 'all')  # Button for showing all data
+      )
+    ),
+    rangeslider = list(visible = TRUE),  # Enable the range slider for zooming
+    type = 'date'  # Set the type of x-axis to date
+  )
+)
+
+# Plot the figure
+fig1
+```
