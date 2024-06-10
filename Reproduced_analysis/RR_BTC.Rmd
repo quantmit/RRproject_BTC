@@ -751,3 +751,14 @@ cat("\014")
 # Clear the environment (remove all objects)
 rm(list = ls())
 ```
+
+
+
+#### Load packages afresh
+
+```{r, message=FALSE, results='hide'}
+# Define the list of package names
+packages <- c("tidyverse", "plotly", "lubridate", "readr", "dplyr", "zoo", "ggplot2", "forecast", "stats", "tseries")
+# Use lapply to load each package
+lapply(packages, library, character.only = TRUE)
+```
