@@ -737,3 +737,10 @@ ggplot(plot_data, aes(x = data$Timestamp[1:length(plot_data$Actual)] )) +
 #### Comparison with Python
 
 ![](/home/dragon/Pictures/lstm.png)
+
+
+## XGBOOST
+
+XGBoost is an implementation of gradient boosted decision trees designed for speed and performance.
+XGBoost is a powerful and versatile tool.
+Lets see, How well does XGBoost perform when used to predict future values of a time-series like Bitcoin prices ?
