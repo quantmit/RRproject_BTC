@@ -762,3 +762,22 @@ packages <- c("tidyverse", "plotly", "lubridate", "readr", "dplyr", "zoo", "ggpl
 # Use lapply to load each package
 lapply(packages, library, character.only = TRUE)
 ```
+
+
+```{r}
+# Define a function to parse timestamps from seconds since the Unix epoch
+dateparse <- function(time_in_secs) {
+  as.POSIXct(as.numeric(time_in_secs), origin="1970-01-01", tz="UTC")  # Convert seconds to POSIXct date-time format
+}
+
+# Replace with your actual file path to the CSV file
+file_path <- '~/Git/Data/coinbaseUSD_1-min_data_2014-12-01_to_2018-11-11.csv'
+
+# Read the CSV file into a data frame
+data <- read.csv(file_path)
+
+# Convert the 'Timestamp' column from Unix time to POSIXct date-time format
+data <- data %>%
+  mutate(Timestamp = as.POSIXct(Timestamp, origin = "1970-01-01", tz = "UTC"))
+
+```
