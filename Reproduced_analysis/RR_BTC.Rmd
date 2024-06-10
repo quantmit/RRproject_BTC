@@ -532,3 +532,32 @@ ggsave("btc_price_plo0t.png", width = 12, height = 6, dpi = 300)  # Adjust width
 
 
 ```
+
+
+```{r, warning=FALSE}
+# Convert 'Timestamp' to POSIXct for proper datetime handling
+data_test$Timestamp <- as.POSIXct(data_test$Timestamp, origin = "1970-01-01", tz = "UTC")
+data_train$Timestamp <- as.POSIXct(data_train$Timestamp, origin = "1970-01-01", tz = "UTC")
+
+# Rename columns for clarity
+data_test <- data_test %>% 
+  rename(`Test Set` = Weighted_Price)  # Rename 'Weighted_Price' column in data_test to 'Test Set'
+
+data_train <- data_train %>% 
+  rename(`Training Set` = Weighted_Price)  # Rename 'Weighted_Price' column in data_train to 'Training Set'
+
+# Join data_test and data_train
+joined_data <- full_join(data_test, data_train, by = "Timestamp")  # Perform a full join on 'Timestamp'
+
+# Plot using ggplot2
+ggplot(joined_data, aes(x = Timestamp)) +  # Define x-axis as 'Timestamp'
+  geom_line(aes(y = `Test Set`), color = "#F8766D") +  # Add line plot for 'Test Set' with specified color
+  geom_line(aes(y = `Training Set`), color = "#D39200") +  # Add line plot for 'Training Set' with specified color
+  labs(title = "BTC Weighted_Price Price (USD) by years") +  # Set plot title
+  theme_minimal() +  # Apply minimal theme
+  theme(plot.title = element_text(hjust = 0.5)) +  # Center the plot title
+  xlab("Date") +  # Label x-axis
+  ylab("Weighted Price (USD)")  # Label y-axis
+
+
+```
