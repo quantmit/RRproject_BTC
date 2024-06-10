@@ -287,3 +287,42 @@ fig1 <- fig %>% layout(
 # Plot the figure
 fig1
 ```
+
+
+### Let's visualize Historical Bitcoin Prices (2015-2018) - Monthly
+
+This code functions exactly as the previous one. The plot shows a spike in prices every October - December for each year.
+This can only be noticed when hovering over the plots and the interactivity becomes active.
+
+#### Comparison with python plot
+
+![python fig2](newplot2.png) ![](newplot(1).png)
+
+These two plots are similar, hence both languages would suit the job for this code.
+
+```{r}
+# Create the trace for Volume (Currency)
+trace1 <- plot_ly(data = weekly_rows, x = ~Timestamp, y = ~`Volume_(Currency)`, type = 'scatter', mode = 'lines', name = 'Bitcoin Volume (USD)')
+
+# Update layout with title, x-axis options, and range slider
+fig2 <- trace1 %>% layout(
+  title = 'Historical Bitcoin Volume (USD) (2015-2018) with the slider',  # Set the title of the plot
+  xaxis = list(
+    rangeselector = list(
+      buttons = list(
+        list(count = 1, label = '1m', step = 'month', stepmode = 'backward'),  # Button for 1 month range
+        list(count = 6, label = '6m', step = 'month', stepmode = 'backward'),  # Button for 6 months range
+        list(count = 12, label = '1y', step = 'month', stepmode = 'backward'),  # Button for 1 year range
+        list(count = 36, label = '3y', step = 'month', stepmode = 'backward'),  # Button for 3 years range
+        list(step = 'all')  # Button for showing all data
+      )
+    ),
+    rangeslider = list(visible = TRUE),  # Enable the range slider for zooming
+    type = 'date'  # Set the type of x-axis to date
+  )
+)
+
+# Plot the figure
+fig2
+```
+
