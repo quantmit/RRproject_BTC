@@ -1,0 +1,43 @@
+---
+title: "REPRORODUCIBLE RESEARCH WITH BITCOIN FORECASTING"
+author: "AYOUB JARBOUAI (418035) &&  IDRISS TALBI (418232)"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+  word_document:
+    toc: true
+  pdf_document:
+    toc: true
+editor_options:
+  markdown:
+    wrap: sentence
+---
+
+# BITCOIN
+
+------------------------------------------------------------------------
+
+
+Bitcoin, introduced in 2009 by the mysterious Satoshi Nakamoto, stands as the pioneering cryptocurrency.
+It operates on a decentralized peer-to-peer network, allowing secure and transparent transactions without the need for a central authority.
+Bitcoin's blockchain technology records every transaction in a public ledger, ensuring immutability and trustworthiness through cryptographic hashing.
+
+Our project is structured into two key sections:
+
+**1. Data Exploration** - Analyzing and visualizing Bitcoin price data.
+- Identifying trends and patterns in historical price movements.
+
+**2. Time Series Analysis and Forecasting** - **Forecasting Methods:** - **LSTM (Long Short-Term Memory):** Leveraging deep learning to capture complex temporal dependencies.
+- **XGBoost:** Harnessing gradient boosting to predict Bitcoin price fluctuations.
+- **Facebook Prophet:** Using a versatile tool for forecasting seasonality and holidays.
+- **ARIMA (AutoRegressive Integrated Moving Average):** Employing a traditional statistical approach for time series forecasting.
+
+This project draws inspiration from notable kernels and tutorials, including those focused on Prophet, XGBoost, and ARIMA models, tailored specifically for Bitcoin price prediction.
+
+For those new to Bitcoin, you can learn more about its fundamentals [here](https://www.coindesk.com/information/what-is-bitcoin).
+
+
+
+------------------------------------------------------------------------
+
