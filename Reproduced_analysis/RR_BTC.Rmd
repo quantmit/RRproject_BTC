@@ -561,3 +561,14 @@ ggplot(joined_data, aes(x = Timestamp)) +  # Define x-axis as 'Timestamp'
 
 
 ```
+
+
+### We will use a Vanilla LSTM here for forecasting. The model is trained on pre 25-Jun-2018 data.
+
+#### Python R Comparison
+
+### Comments on Differences
+
+In R here we used self-made functions and in Python libraries were utilized.
+Utilizing libraries in r would have meant creating a virtual python environment to utilize Keras libraries.
+This would have meant using the same python code again.
