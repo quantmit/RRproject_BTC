@@ -79,3 +79,36 @@ packages <- c("tidyverse", "plotly", "lubridate", "readr", "dplyr", "zoo", "ggpl
 # Use lapply to load each package
 lapply(packages, require, character.only = TRUE)
 ```
+
+
+
+## Data importation
+
+-   **The data importation utilizes the read_csv function from the readr library. our Data has a Timestamp which will be converted to readable form with the code line `mutate(Timestamp = as.POSIXct(Timestamp, origin = "1970-01-01", tz = "UTC"))`**
+
+-   The line interprets the Timestamp in a human-readable form.
+    We set the format to UTC and then give it a sample date to use like in our case 1970-01-01.
+    and set the path to our file.
+
+-   Here we end the code by displaying the first 6 rows of data.
+
+```{r, message=FALSE}
+# Define a function to parse timestamps from seconds since the Unix epoch
+dateparse <- function(time_in_secs) {
+  as_datetime(as.numeric(time_in_secs), origin = "1970-01-01", tz = "UTC")
+}
+
+# Expand the tilde to the home directory and specify the file path
+file_path <- "~/Git/Data/coinbaseUSD_1-min_data_2014-12-01_to_2018-11-11.csv"
+
+# Read the CSV file into a data frame named 'data'
+data <- read_csv("~/Git/Data/coinbaseUSD_1-min_data_2014-12-01_to_2018-11-11.csv")
+
+# Convert the 'Timestamp' column from numeric Unix timestamps to POSIXct date-time objects
+data <- data %>%
+  mutate(Timestamp = as.POSIXct(Timestamp, origin = "1970-01-01", tz = "UTC"))
+
+# Display the first few rows of the 'data' data frame
+#head(data)
+
+```
