@@ -376,3 +376,24 @@ fig3 <- trace %>% layout(
 # Plot the figure
 fig3
 ```
+
+
+
+# Timeserires Forecasting
+
+**Time Series Forecasting** An experimental set of data that has been seen at various times is called a time series (typically equally spaced, as once a day, once an hour, or once a minute).
+A time series would be the daily sales data for airline tickets, for instance.
+Dates of significant airline tragedies, for example, are not time series since they are arbitrarily spaced; they are just a collection of occurrences with a time component.
+Point processes are a class of random processes.
+
+Time series include seasonality, noise, and trend, among other important characteristics.The technique of predicting the future using data from the past and present is called forecasting.
+Here in this kernel, we attempt to perform Time Series Analysis on the Historic Bitcoin Price data.
+We can easily see from the **Data Exploration** section, that the Bitcoin prices were quite volatile and inconsistent over the years.
+Its very hard to perform Time series analysis on such volatile data.
+But here we try to explore the different Time series forecasting models.
+All the models used in this Kernel are very basic, there is scope of more complex and better performing models.
+
+-   Time Series forecasting with LSTM
+-   Time Series forecasting with XGBoost
+-   Time Series forecasting with Facebook Prophet
+-   Time Series forecasting with ARIMA
