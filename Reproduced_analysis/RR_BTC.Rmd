@@ -215,3 +215,28 @@ data <- data %>%
 #head(data)
 ```
 
+
+### Getting weekly data
+
+-   The code below groups the data by weeks where we create weekly groupings every 7 days from the date `2015-01-01 00:00:00` to `2018-11-11 00:00:00`. after this, we display the weekly data created and stored as weekly_rows
+
+```{r}
+# Create valid date range
+start <- ymd_hms("2015-01-01 00:00:00", tz = "UTC")  # Define start date-time in UTC timezone
+end <- ymd_hms("2018-11-11 00:00:00", tz = "UTC")    # Define end date-time in UTC timezone
+
+# Find rows between start and end time in 'data' dataframe
+filtered_data <- data %>%
+  filter(Timestamp >= start & Timestamp <= end)  # Filter data for rows with Timestamp between 'start' and 'end'
+
+# Find the first row of each week (starting on Monday) in filtered_data
+weekly_rows <- filtered_data %>%
+  mutate(Week = floor_date(Timestamp, unit = "week", week_start = 1)) %>% # Create 'Week' column by flooring Timestamp to the nearest week starting on Monday
+  group_by(Week) %>%        # Group rows by 'Week' column
+  slice(1) %>%               # Select the first row from each group (week)
+  ungroup()                  # Remove grouping for further operations
+
+# Display the first few rows of weekly_rows dataframe
+#head(weekly_rows)
+
+```
