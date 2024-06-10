@@ -346,3 +346,13 @@ There is a cluster of Volumes at specific prices.
 -   December 18th 2017, Bitcoin reaches a record high, but does not reach USD 20,000.
 -   December 28th 2017, The price of bitcoins fell after South Korea announced additional measures to regulate bitcoin trading, including the potential closure of exchanges, among the volatile movements in the world's third largest cryptocurrency market.
 -   October 31st 2018, USD 6,300, on the 10 year anniversary of Bitcoin, price holds steady above USD 6,000 during a period of historically low volatility.
+
+
+#### Comparison with python plot
+
+![Volume plot from python](newplotvol.png)
+
+![volume plot in R](newplotvol.png)
+
+These two plots are simmilar making both languages easier to handle for this kind of plot.
+
