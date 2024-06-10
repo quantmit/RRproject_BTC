@@ -781,3 +781,36 @@ data <- data %>%
   mutate(Timestamp = as.POSIXct(Timestamp, origin = "1970-01-01", tz = "UTC"))
 
 ```
+
+### Missing values and cleaning
+
+```{r}
+
+# Convert 'Timestamp' column from numeric Unix timestamps to POSIXct date-time objects in UTC timezone
+data <- data %>%
+  mutate(Timestamp = as.POSIXct(Timestamp, origin = "1970-01-01", tz = "UTC"))
+
+# Display the first few rows of the updated dataframe 'data'
+head(data)# Fill NA values with zeroes for volume/trade-related fields using dplyr's mutate function
+data <- data %>%
+  mutate(Volume_.BTC. = ifelse(is.na(Volume_.BTC.), 0, Volume_.BTC.),  # Replace NA with 0 in 'Volume_(BTC)'
+         Volume_.Currency. = ifelse(is.na(Volume_.Currency.), 0, Volume_.Currency.),  # Replace NA with 0 in 'Volume_(Currency)'
+         Weighted_Price = ifelse(is.na(Weighted_Price), 0, Weighted_Price))  # Replace NA with 0 in 'Weighted_Price'
+
+
+# Convert 'Timestamp' column from numeric Unix timestamps to POSIXct date-time objects in UTC timezone
+data <- data %>%
+  mutate(Timestamp = as.POSIXct(Timestamp, origin = "1970-01-01", tz = "UTC"))
+
+# Group by hourly frequency, take the first observation per hour
+data <- data %>% 
+  mutate(Timestamp = floor_date(Timestamp, unit = "hour")) %>%  # Floor 'Timestamp' to the nearest hour
+  group_by(Timestamp) %>%  # Group by 'Timestamp'
+  slice_head(n = 1) %>%  # Take the first row from each group
+  ungroup() %>%  # Ungroup the data
+  select(Timestamp, Weighted_Price)  # Select 'Timestamp' and 'Weighted_Price' columns
+
+
+# Display the first few rows of the updated dataframe 'data'
+#head(data)
+```
