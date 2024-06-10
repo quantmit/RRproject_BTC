@@ -124,3 +124,52 @@ The summary also highlights the total number of missing variables in each column
 ```{r}
 summary(data)
 ```
+
+
+
+## Data Cleaning
+
+### Data handling Comparison with python
+
+
+
+| **`R Code`**                                                                      | **`Python Code`**                                                                      |
+|-------------------------------------|-----------------------------------|
+| `r`                                                                               | `python`                                                                               |
+| \# Load required libraries                                                        | \# Import necessary libraries                                                          |
+| library(dplyr)                                                                    | import pandas as pd                                                                    |
+| library(zoo)                                                                      | import numpy as np                                                                     |
+|                                                                                   |                                                                                        |
+| \# Sample data                                                                    | \# Sample data                                                                         |
+| data \<- data.frame(                                                              | data = pd.DataFrame({                                                                  |
+| Timestamp = seq.POSIXt(from = as.POSIXct("2022-01-01 00:00"),                     | 'Timestamp': pd.date_range(start='2022-01-01', periods=10, freq='H'),                  |
+| by = "hour", length.out = 10),                                                    | 'Volume\_(BTC)': [0.5, np.nan, 0.6, np.nan, np.nan, 0.7, 0.8, np.nan, 0.9, 1.0],       |
+| `Volume_(BTC)` = c(0.5, NA, 0.6, NA, NA, 0.7, 0.8, NA, 0.9, 1.0),                 | 'Volume\_(Currency)': [500, np.nan, 600, np.nan, np.nan, 700, 800, np.nan, 900, 1000], |
+| `Volume_(Currency)` = c(500, NA, 600, NA, NA, 700, 800, NA, 900, 1000),           | 'Weighted_Price': [100, np.nan, 102, np.nan, np.nan, 105, 106, np.nan, 108, 109],      |
+| Weighted_Price = c(100, NA, 102, NA, NA, 105, 106, NA, 108, 109),                 | 'Open': [100, 101, np.nan, 103, np.nan, 105, 106, np.nan, 108, 109],                   |
+| Open = c(100, 101, NA, 103, NA, 105, 106, NA, 108, 109),                          | 'High': [101, 102, np.nan, 104, np.nan, 106, 107, np.nan, 109, 110],                   |
+| High = c(101, 102, NA, 104, NA, 106, 107, NA, 109, 110),                          | 'Low': [99, 100, np.nan, 102, np.nan, 104, 105, np.nan, 107, 108],                     |
+| Low = c(99, 100, NA, 102, NA, 104, 105, NA, 107, 108),                            | 'Close': [100, 101, np.nan, 103, np.nan, 105, 106, np.nan, 108, 109]                   |
+| Close = c(100, 101, NA, 103, NA, 105, 106, NA, 108, 109)                          | })                                                                                     |
+| )                                                                                 |                                                                                        |
+|                                                                                   |                                                                                        |
+| \# Replace NA with 0 for volume/trade-related fields                              | \# Replace NA with 0 for volume/trade-related fields                                   |
+| data \<- data %\>%                                                                | data['Volume\_(BTC)'].fillna(value=0, inplace=True)                                    |
+| mutate(`Volume_(BTC)` = ifelse(is.na(`Volume_(BTC)`), 0, `Volume_(BTC)`),         | data['Volume\_(Currency)'].fillna(value=0, inplace=True)                               |
+| `Volume_(Currency)` = ifelse(is.na(`Volume_(Currency)`), 0, `Volume_(Currency)`), | data['Weighted_Price'].fillna(value=0, inplace=True)                                   |
+| Weighted_Price = ifelse(is.na(Weighted_Price), 0, Weighted_Price))                |                                                                                        |
+|                                                                                   |                                                                                        |
+| \# Fill forward NA values for OHLC data                                           | \# Fill forward NA values for OHLC data                                                |
+| data$Open <- zoo::na.locf(data$Open)                                              | data['Open'].fillna(method='ffill', inplace=True)                                      |
+| data$High <- zoo::na.locf(data$High)                                              | data['High'].fillna(method='ffill', inplace=True)                                      |
+| data$Low <- zoo::na.locf(data$Low)                                                | data['Low'].fillna(method='ffill', inplace=True)                                       |
+| data$Close <- zoo::na.locf(data$Close)                                            | data['Close'].fillna(method='ffill', inplace=True)                                     |
+|                                                                                   |                                                                                        |
+| \# Convert 'Timestamp' column to POSIXct                                          | \# Convert 'Timestamp' column to datetime                                              |
+| data \<- data %\>%                                                                | data['Timestamp'] = pd.to_datetime(data['Timestamp'], unit='s', utc=True)              |
+| mutate(Timestamp = as.POSIXct(Timestamp, origin = "1970-01-01", tz = "UTC"))      |                                                                                        |
+|                                                                                   |                                                                                        |
+| \# Display the first few rows of the updated dataframe                            | \# Display the first few rows of the updated dataframe                                 |
+| head(data)                                                                        | print(data.head())                                                                     |
+| `|`                                                                               |                                                                                        |
+
