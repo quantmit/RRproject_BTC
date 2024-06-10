@@ -731,3 +731,9 @@ ggplot(plot_data, aes(x = data$Timestamp[1:length(plot_data$Actual)] )) +
 
 
 ```
+
+
+
+#### Comparison with Python
+
+![](/home/dragon/Pictures/lstm.png)
