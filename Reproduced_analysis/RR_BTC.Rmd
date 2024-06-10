@@ -572,3 +572,127 @@ ggplot(joined_data, aes(x = Timestamp)) +  # Define x-axis as 'Timestamp'
 In R here we used self-made functions and in Python libraries were utilized.
 Utilizing libraries in r would have meant creating a virtual python environment to utilize Keras libraries.
 This would have meant using the same python code again.
+
+
+```{r}
+library(ggplot2)
+
+# Data Preprocessing
+data <- na.omit(data)
+data$hour <- as.POSIXct(format(data$Timestamp, "%Y-%m-%d %H:00:00"), tz = "UTC")
+data <- data[!duplicated(data$hour), ]
+
+fill_missing <- function(values) {
+  last_value <- NA
+  filled_values <- numeric(length(values))
+  for (i in seq_along(values)) {
+    if (is.na(values[i])) {
+      filled_values[i] <- last_value
+    } else {
+      filled_values[i] <- values[i]
+      last_value <- values[i]
+    }
+  }
+  return(filled_values)
+}
+
+data$Weighted_Price <- fill_missing(data$Weighted_Price)
+
+split_date <- as.POSIXct("2018-06-25", tz = "UTC")
+data_train <- data[data$hour <= split_date, "Weighted_Price", drop = FALSE]
+data_test <- data[data$hour > split_date, "Weighted_Price", drop = FALSE]
+
+scale_data <- function(values) {
+  mean_val <- mean(values, na.rm = TRUE)
+  std_val <- sd(values, na.rm = TRUE)
+  scaled_values <- (values - mean_val) / std_val
+  list(scaled_values = scaled_values, mean = mean_val, std = std_val)
+}
+
+scaled_train <- scale_data(data_train$Weighted_Price)
+scaled_test <- scale_data(data_test$Weighted_Price)  # Apply same scaling to test data
+training_set <- scaled_train$scaled_values
+testing_set <- scaled_test$scaled_values
+
+X_train <- training_set[-length(training_set)]
+y_train <- training_set[-1]
+y_train <- matrix(y_train, ncol = 1)
+
+X_train <- array(X_train, dim = c(length(X_train), 1, 1))
+
+# LSTM Model Definition
+sigmoid <- function(x) {
+  1 / (1 + exp(-x))
+}
+
+tanh_act <- function(x) {
+  tanh(x)
+}
+
+initialize_weights <- function(input_size, output_size) {
+  matrix(rnorm(input_size * output_size), nrow = input_size, ncol = output_size)
+}
+
+SimpleLSTM <- function(input_shape, units) {
+  list(
+    units = units,
+    Wf = initialize_weights(input_shape[2], units),
+    Wi = initialize_weights(input_shape[2], units),
+    Wc = initialize_weights(input_shape[2], units),
+    Wo = initialize_weights(input_shape[2], units),
+    bf = rep(0, units),
+    bi = rep(0, units),
+    bc = rep(0, units),
+    bo = rep(0, units),
+    Wy = initialize_weights(units, 1),
+    by = 0
+  )
+}
+
+forward <- function(model, x) {
+  h_prev <- rep(0, model$units)
+  c_prev <- rep(0, model$units)
+  for (t in 1:dim(x)[1]) {
+    xt <- x[t, , , drop = FALSE]
+    f_t <- sigmoid(xt %*% model$Wf + model$bf)
+    i_t <- sigmoid(xt %*% model$Wi + model$bi)
+    c_tilde_t <- tanh_act(xt %*% model$Wc + model$bc)
+    c_t <- f_t * c_prev + i_t * c_tilde_t
+    o_t <- sigmoid(xt %*% model$Wo + model$bo)
+    h_t <- o_t * tanh_act(c_t)
+    h_prev <- h_t
+    c_prev <- c_t
+  }
+  y <- h_t %*% model$Wy + model$by
+  y
+}
+
+train <- function(model, X, y, epochs, lr) {
+  for (epoch in 1:epochs) {
+    loss <- 0
+    for (i in 1:dim(X)[1]) {
+      output <- forward(model, X[i, , , drop = FALSE])
+      error <- output - y[i, ]
+      loss <- loss + sum(error^2)
+      # Backpropagation would be added here
+    }
+    if (epoch %% 10 == 0) {
+      cat("Epoch", epoch, "Loss:", loss, "\n")
+    }
+  }
+}
+
+# Prediction Function
+predict_lstm <- function(model, X) {
+  predictions <- numeric(dim(X)[1])
+  for (i in 1:dim(X)[1]) {
+    predictions[i] <- forward(model, X[i, , , drop = FALSE])
+  }
+  return(predictions)
+}
+
+input_shape <- c(1, 1)
+units <- 128
+model <- SimpleLSTM(input_shape, units)
+train(model, X_train, y_train, epochs = 10, lr = 0.001)
+```
