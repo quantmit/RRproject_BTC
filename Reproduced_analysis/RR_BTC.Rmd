@@ -41,3 +41,31 @@ For those new to Bitcoin, you can learn more about its fundamentals [here](https
 
 ------------------------------------------------------------------------
 
+
+
+
+
+# Checking out the dataset in my data folder
+
+From the code below  we set a default data folder we run the code and list the data files in the folder. For our case, it's
+
+-   "bitstampUSD_1-min_data_2012-01-01_to_2018-11-11.csv"
+
+This file has the daily data from 2012 first of January to 2018 eleventh of November hourly market prices for BTC
+
+-   "coinbaseUSD_1-min_data_2014-12-01_to_2018-11-11.csv"
+
+This file has the daily data from 2014 first of January to 2018 eleventh of November hourly market prices for BTC
+
+```{r, message=FALSE}
+# Set the directory path where the data is located
+data_dir <- "~/Git/Data"
+
+# List files in the directory specified by data_dir
+dir_contents <- list.files(data_dir)
+
+# Print the contents of the directory to the console
+print(dir_contents)
+
+```
+
