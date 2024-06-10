@@ -326,3 +326,23 @@ fig2 <- trace1 %>% layout(
 fig2
 ```
 
+### BTC Volume
+
+This is a BTC Volume plot where we see the relationship between the BTC volume and weighted price.
+There is a cluster of Volumes at specific prices.
+
+**History of Bitcoin Prices**
+
+-   18 August 2008, the domain name bitcoin.org was registered.
+-   November 6th 2010, Bitcoin share capital reaches 1 million USD. Its exchange rate on MtGox reaches USD 0.50 per BTC.
+-   June 2nd 2011, USD to BTC rate is 10 USD to the coin. For 6 days, the Bitcoin value is fixed at 31.91 USD on MtGox.
+-   February 28th 2013, Bitcoin exchange rate surpasses 31.91 USD for the first time for the last 601 days.
+-   April 1st,2013 Exchange rate of Bitcoin reaches 100 USD to 1 BTC.
+-   January,2015 Coinbase raised 75 million USD as part of a Series C funding round, smashing the previous record for a bitcoin company.
+-   February ,2015 Bitcoin price reached USD 262.
+-   January 2017,After the rally for most of the second half of 2016, bitcoin broke the USD 1,000 mark for the first time in 3 years.
+-   June 12th 2017, Bitcoin exchange rate exceeds USD 3000 to the BTC.
+-   November 29th 2017, Bitcoin price exceeds USD 10,000.
+-   December 18th 2017, Bitcoin reaches a record high, but does not reach USD 20,000.
+-   December 28th 2017, The price of bitcoins fell after South Korea announced additional measures to regulate bitcoin trading, including the potential closure of exchanges, among the volatile movements in the world's third largest cryptocurrency market.
+-   October 31st 2018, USD 6,300, on the 10 year anniversary of Bitcoin, price holds steady above USD 6,000 during a period of historically low volatility.
