@@ -484,3 +484,31 @@ data <- data %>%
 # Print the first few rows of the dataframe
 #head(data)  # Display the first few rows of 'data'
 ```
+
+
+
+**For the train and test, we take '25-Jun-2018' as the split date. There was a considerable dip in Bitcoin prices between the June-July period 2018. If we check the historical prices the seasonal market started going up from this date after reaching the lowest, though the price reached much lower \$5972 on June 29th 2018. After reaching the historic 20K mark on December 18th, there were several dips and market price was recorrected every time. Read more about [Bitcoin dips.](http://https://news.bitcoin.com/data-reveals-reasons-behind-bitcoins-big-dip/)**
+
+```{r}
+# Convert 'Timestamp' column to POSIXct with UTC timezone
+data$Timestamp <- as.POSIXct(data$Timestamp, origin = "1970-01-01", tz = "UTC")
+
+# Define the split date
+split_date <- as.POSIXct("2018-06-25", tz = "UTC")
+
+# Split data into training and testing sets
+data_train <- data %>% 
+  filter(Timestamp <= split_date) %>%  # Filter rows where Timestamp is less than or equal to split_date
+  select(Timestamp, Weighted_Price) %>%  # Select Timestamp and Weighted_Price columns
+  mutate(Timestamp = as.character(Timestamp))  # Convert Timestamp to character for writing to CSV
+
+  data_test <- data %>% 
+  filter(Timestamp > split_date) %>%  # Filter rows where Timestamp is greater than split_date
+  select(Timestamp, Weighted_Price) %>%  # Select Timestamp and Weighted_Price columns
+  mutate(Timestamp = as.character(Timestamp))  # Convert Timestamp to character for writing to CSV
+
+# Print head of training and testing sets
+#head(data_train)  # Display the first few rows of 'data_train'
+#head(data_test)   # Display the first few rows of 'data_test'
+
+```
