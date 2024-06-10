@@ -512,3 +512,23 @@ data_train <- data %>%
 #head(data_test)   # Display the first few rows of 'data_test'
 
 ```
+
+
+```{r}
+# Define the color palette
+color_pal <- c("#F8766D", "#D39200", "#93AA00", "#00BA38", "#00C19F", "#00B9E3", "#619CFF", "#DB72FB")
+
+# Plot using ggplot2
+ggplot(data, aes(x = Timestamp, y = Weighted_Price)) +
+  geom_line(color = color_pal[1]) +
+  labs(title = "BTC Weighted_Price Price (USD) by Hours") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle = 45, hjust = 1)) +  # Adjust x-axis text angle and alignment
+  scale_x_datetime(date_labels = "%b %Y", date_breaks = "1 month")  # Customize x-axis date labels and breaks
+
+# Save the plot with adjusted size and layout
+ggsave("btc_price_plo0t.png", width = 12, height = 6, dpi = 300)  # Adjust width and height as needed
+
+
+```
