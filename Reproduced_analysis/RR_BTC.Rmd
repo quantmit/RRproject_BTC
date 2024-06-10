@@ -710,4 +710,24 @@ predictions <- predict_lstm(model, X_test)
 predictions_rescaled <- predictions * scaled_train$std + scaled_train$mean
 actual_rescaled <- testing_set[-1] * scaled_train$std + scaled_train$mean
 
+
+# Prepare data for plotting
+plot_data <- data.frame(
+  #Timestamp = data[data$hour > split_date, "hour"][-1],
+  Actual = actual_rescaled,
+  Predicted = predictions_rescaled
+)
+
+
+# Plotting
+ggplot(plot_data, aes(x = data$Timestamp[1:length(plot_data$Actual)] )) +
+  geom_line(aes(y = Actual, color = "Actual")) +
+  geom_line(aes(y = Predicted, color = "Predicted")) +
+  labs(title = "LSTM Predictions vs Actual",
+       x = "Time",
+       y = "Weighted Price") +
+  scale_color_manual(values = c("Actual" = "blue", "Predicted" = "red")) +
+  theme_minimal()
+
+
 ```
