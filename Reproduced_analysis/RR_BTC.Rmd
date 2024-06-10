@@ -696,3 +696,10 @@ units <- 128
 model <- SimpleLSTM(input_shape, units)
 train(model, X_train, y_train, epochs = 10, lr = 0.001)
 ```
+
+
+```{r}
+# Prepare test data for prediction
+X_test <- array(testing_set[-length(testing_set)], dim = c(length(testing_set) - 1, 1, 1))
+
+```
