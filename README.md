@@ -1,8 +1,24 @@
-# Data Analysis and Replication Project
+# Bitcoin Time Series Forecasting in R
 
-## Introduction
-This repository contains the code and documentation for a Bitcoin data analysis and replication project. The project involves translating and reproducing the Bitcoin time series analysis from Python to Rstudio.
+This project replicates the Bitcoin price time series forecasting analysis originally done by Aditya Mandal in Python. The analysis has been re-implemented in R, leveraging various time series forecasting techniques to predict future Bitcoin prices.
 
-## Original analysis
-The original [analysis](https://www.kaggle.com/code/someadityamandal/bitcoin-time-series-forecasting) contains Data exploration and Time series analysis. Furthermore, the forecasting is done using LSTM, XGBoost, Prophet and ARIMA.
+## Overview
 
+- **Data Preprocessing**
+- **Visualization**
+- **Forecasting Models**
+  - ARIMA
+  - Prophet
+  - LSTM
+
+## Dataset
+
+The dataset used for this analysis can be found on Kaggle:
+[Bitcoin Time Series Forecasting Dataset](https://www.kaggle.com/code/someadityamandal/bitcoin-time-series-forecasting/notebook)
+
+## Requirements
+
+To install the necessary R packages, run:
+
+```R
+install.packages(c("tidyverse", "plotly", "lubridate", "readr", "dplyr", "zoo", "ggplot2", "forecast", "stats", "tseries"))
