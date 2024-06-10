@@ -69,3 +69,13 @@ print(dir_contents)
 
 ```
 
+# Environment preparation
+
+## Getting packages
+
+```{r, message=FALSE}
+# Define the list of package names
+packages <- c("tidyverse", "plotly", "lubridate", "readr", "dplyr", "zoo", "ggplot2", "forecast", "stats", "tseries")
+# Use lapply to load each package
+lapply(packages, require, character.only = TRUE)
+```
