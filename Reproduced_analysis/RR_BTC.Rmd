@@ -1279,3 +1279,15 @@ Here’s an analysis to help decide which language might be better based on thes
 -   **Python Metrics**:
     -   MSE: 484476.69
     -   MAE: 474.81
+
+
+### Interpretation:
+
+-   **MSE (Mean Squared Error)** measures the average squared difference between the actual and predicted values. A lower MSE indicates better model performance.
+-   **MAE (Mean Absolute Error)** measures the average absolute difference between actual and predicted values. Like MSE, a lower MAE indicates better performance.
+
+### Observations:
+
+-   The model in R has significantly lower MSE and MAE values compared to the Python model.
+-   This suggests that the R model is performing much better, predicting closer to the actual values than the Python model.
+
