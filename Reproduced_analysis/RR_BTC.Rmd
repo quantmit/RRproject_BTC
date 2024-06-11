@@ -1347,3 +1347,19 @@ ggplot(data, aes(x = Timestamp, y = Weighted_Price)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +  # Rotate x-axis labels for better readability
   scale_x_datetime(date_breaks = "960 hour", date_labels = "%Y-%m-%d %H:%M")  # Set breaks and format for datetime x-axis
 ```
+
+
+
+```{r}
+# Assuming 'data' is your dataset with 'Timestamp' as a column
+
+# Convert 'Timestamp' to POSIXct (datetime) format if not already in that format
+data$Timestamp <- as.POSIXct(data$Timestamp, format = "%d-%b-%Y")
+
+# Define split_date in POSIXct format
+split_date <- as.POSIXct("2018-06-25")
+
+# Create data_train and data_test
+data_train <- data[data$Timestamp <= split_date, ]
+data_test <- data[data$Timestamp > split_date, ]
+```
