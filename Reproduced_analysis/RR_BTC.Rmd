@@ -1008,3 +1008,26 @@ summary(model.boost)
 model.boost$params
 model.boost$best_score
 ```
+
+
+### MAE and MSE
+
+```{r}
+# Make predictions on training data
+train_pred <- predict(model.boost, dtrain)
+
+# Get actual values from training data
+train_actual <- as.numeric(getinfo(dtrain, "label"))  # Extract the actual labels from dtrain
+
+# Calculate Mean Squared Error (MSE)
+train_mse <- mean((train_actual - train_pred)^2)
+
+# Calculate Mean Absolute Error (MAE)
+train_mae <- mean(abs(train_actual - train_pred))
+
+# Print the results
+cat("Training MSE:", train_mse, "\n")
+cat("Training MAE:", train_mae, "\n")
+
+```
+
