@@ -1330,3 +1330,20 @@ data <- data %>%
 # Print the resulting data frame
 #print(data)  # Output the cleaned and processed data frame
 ```
+
+
+
+```{r}
+library(ggplot2)
+
+# Define color palette
+color_pal <- c("#F8766D", "#D39200", "#93AA00", "#00BA38", "#00C19F", "#00B9E3", "#619CFF", "#DB72FB")
+
+# Plot using ggplot2
+ggplot(data, aes(x = Timestamp, y = Weighted_Price)) +
+  geom_line(color = color_pal[1]) +  # Adjust color_pal index as needed
+  labs(title = "BTC Weighted_Price Price (USD) by Hours") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +  # Rotate x-axis labels for better readability
+  scale_x_datetime(date_breaks = "960 hour", date_labels = "%Y-%m-%d %H:%M")  # Set breaks and format for datetime x-axis
+```
