@@ -1642,3 +1642,32 @@ plot(ts_data_month, main = "Monthly Time Series Plot")
 
 To perform decomposition, ACF, PACF, ADF test, stationarity test, ARIMA modeling, forecasting, and plotting for your monthly time series data `ts_data_month`, here's a structured approach in R:
 
+
+#### 1. Decomposition
+
+1.  **Observed**:
+    -   The top panel shows the original time series data. This is the combination of the trend, seasonal, and random components.
+    -   The series starts around 2014 and ends in 2018, with an apparent overall increase over time, particularly a significant spike around 2017.
+2.  **Trend**:
+    -   The second panel displays the trend component, which represents the long-term progression of the time series.
+    -   This component captures the underlying direction in the data. The trend here shows a steady increase, particularly from around 2016 onward, indicating a general upward movement in the data over the observed period.
+3.  **Seasonal**:
+    -   The third panel shows the seasonal component, capturing the repeating short-term cycle in the data.
+    -   This component highlights the periodic fluctuations that repeat over a specific period (e.g., yearly, quarterly). In this series, there is a clear seasonal pattern with peaks and troughs that seem to repeat annually.
+4.  **Random (Residual)**:
+    -   The bottom panel displays the residual component, which represents the irregular or random fluctuations in the time series that are not explained by the trend or seasonal components.
+    -   This component includes noise and any other patterns not captured by the trend or seasonal components. There appears to be a significant spike in the residuals around the same time as the spike in the observed data in 2017, indicating some unusual or unexpected event.
+
+### Interpretation
+
+-   **Trend**: The increasing trend suggests a long-term growth in the observed phenomenon. This could be due to various factors such as economic growth, technological advancements, or other underlying factors driving the increase.
+-   **Seasonal**: The repeating pattern indicates a consistent seasonal effect, which could be due to factors such as weather, holidays, or other cyclical events.
+-   **Random**: The residuals show the randomness or noise in the data. Significant spikes in this component can indicate outliers or anomalies in the data that may warrant further investigation.
+
+```{r}
+# Perform decomposition
+decomp <- decompose(ts_data_month)
+
+# Plot decomposition
+plot(decomp)
+```
