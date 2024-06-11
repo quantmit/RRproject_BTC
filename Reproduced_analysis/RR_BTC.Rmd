@@ -1363,3 +1363,28 @@ split_date <- as.POSIXct("2018-06-25")
 data_train <- data[data$Timestamp <= split_date, ]
 data_test <- data[data$Timestamp > split_date, ]
 ```
+
+
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+
+# Group and summarize by hour, ensuring no missing values
+data_hourly <- data %>%
+  group_by(Timestamp = floor_date(Timestamp, "hour")) %>%
+  summarize(Weighted_Price = mean(Weighted_Price, na.rm = TRUE)) %>%
+  ungroup()
+
+# Plotting with ggplot2
+plt_hrsly <- ggplot(data_hourly, aes(x = Timestamp, y = Weighted_Price)) +
+  geom_line(color = "#F8766D") +
+  labs(title = "BTC Weighted_Price Price (USD) by Hours", x = "Timestamp", y = "Price") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_x_datetime(date_labels = "%d-%b %H:%M", date_breaks = "960 hour") +
+  scale_color_manual(values = c("#F8766D"))
+plt_hrsly
+
+```
