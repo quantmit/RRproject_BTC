@@ -1528,3 +1528,24 @@ print(ljung_box)
 -   **Significant Lags**:
     -   The plot shows that the first lag (very close to 0.014) has a significant positive partial autocorrelation, as indicated by the bar extending beyond the upper significance bound.
     -   Subsequent lags are within the significance bounds, suggesting that they do not have significant partial autocorrelation values.
+
+
+### Implications
+
+-   The significant partial autocorrelation at the first lag suggests that after differentiation, the time series data has a significant relationship with its immediate past value.
+-   This can imply that a simple autoregressive model of order 1 (AR(1)) may be sufficient to model the differentiated series. The differentiation has likely removed any higher-order correlations that were present in the original non-stationary series.
+-   If the original series was an integrated series of order 1 (i.e., needed one differentiation to become stationary), this PACF plot of the differentiated series indicates that it is now a stationary AR(1) process.
+
+
+```{r}
+# Differentiate the time series data
+diff_ts_data <- diff(ts_data)
+
+# Plot the differentiated time series data
+plot(diff_ts_data, main = "Differentiated Time Series")
+
+# PACF (Partial Autocorrelation Function) plot of differentiated data
+pacf_plot <- pacf(diff_ts_data, lag.max = 5)
+plot(pacf_plot, main = "Partial Autocorrelation Function (PACF) of Differentiated Time Series")
+
+```
