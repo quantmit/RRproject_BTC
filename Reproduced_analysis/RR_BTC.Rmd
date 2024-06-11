@@ -1689,3 +1689,15 @@ plot(acf_plot, main = "Autocorrelation Function (ACF)")
 pacf_plot <- pacf(ts_data_month, lag.max = 5)
 plot(pacf_plot, main = "Partial Autocorrelation Function (PACF)")
 ```
+
+
+#### 3. Augmented Dickey-Fuller (ADF) Test for Stationarity
+
+```{r}
+library(forecast)
+library(urca)
+library(TSA)
+# ADF test
+adf_test <- ur.df(ts_data_month, lags = 1, type = "drift")  # Adjust lags as needed
+summary(adf_test)
+```
