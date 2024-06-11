@@ -1156,3 +1156,94 @@ p <- ggplot(results, aes(x = Timestamp)) +
 p
 #ggplotly(p) #interactive plot widget
 ```
+
+### Forecasting ahead
+
+#### Comparison of forecast with Python : 
+
+![python forecast](/home/dragon/Pictures/forecast.png)
+
+```{r}
+# Load necessary libraries
+library(xgboost)  # For XGBoost model
+library(ggplot2)  # For plotting
+library(dplyr)    # For data manipulation
+
+# Convert 'Timestamp' column to numeric format (seconds since the Unix epoch) if necessary
+data_na$Timestamp <- as.numeric(as.POSIXct(data_na$Timestamp))
+
+# Split data into training and testing sets
+split_date <- as.numeric(as.POSIXct("2018-06-25"))
+data_train_na <- data_na %>% filter(Timestamp <= split_date)
+data_test_na <- data_na %>% filter(Timestamp > split_date)
+
+# Convert to matrix format for XGBoost
+X_train <- as.matrix(data_train_na[, c("Timestamp", "Weighted_Price")])
+y_train <- data_train_na$Weighted_Price
+
+X_test <- as.matrix(data_test_na[, c("Timestamp", "Weighted_Price")])
+y_test <- data_test_na$Weighted_Price
+
+# Create DMatrix for training and testing
+dtrain <- xgb.DMatrix(data = X_train, label = y_train)
+dtest <- xgb.DMatrix(data = X_test, label = y_test)
+
+# Define parameters for the XGBoost model
+params <- list(
+  objective = "reg:squarederror",  # Specify the objective function type for regression
+  min_child_weight = 10,  # Minimum sum of instance weight (hessian) needed in a child
+  booster = "gbtree",  # Use tree-based boosters
+  colsample_bytree = 0.3,  # Fraction of features to be used for each tree
+  learning_rate = 0.1,  # Step size shrinkage to prevent overfitting
+  max_depth = 5,  # Maximum depth of a tree
+  alpha = 10  # L1 regularization term on weights (lasso regression)
+)
+
+# Train the XGBoost model
+model <- xgb.train(
+  params = params,  # Model parameters
+  data = dtrain,  # Training data
+  nrounds = 100,  # Number of boosting rounds
+  early_stopping_rounds = 50,  # Stop training if the performance doesn't improve for 50 rounds
+  maximize = FALSE,  # Minimize the evaluation metric (since this is regression)
+  watchlist = list(train = dtrain),  # List of data to evaluate on during training
+  verbose = 0  # Set to 1 to print training progress, 0 for silent mode
+)
+
+# Make predictions on the training data
+predictions_train <- predict(model, dtrain)
+
+# Make predictions on the test data
+predictions_test <- predict(model, dtest)
+
+# Convert 'Timestamp' back to POSIXct format for plotting
+data_train$Timestamp <- as.POSIXct(data_train$Timestamp, origin="1970-01-01", tz="UTC")
+data_test$Timestamp <- as.POSIXct(data_test$Timestamp, origin="1970-01-01", tz="UTC")
+
+# Combine actual and predicted values into a single data frame
+results_train <- data.frame(
+  Timestamp = data_train_na$Timestamp,
+  Actual = y_train,
+  Predicted = predictions_train
+)
+
+results_test <- data.frame(
+  Timestamp = data_test_na$Timestamp,
+  Actual = y_test,
+  Predicted = predictions_test
+)
+
+# Plot actual vs predicted values using ggplot2
+ggplot() +
+  geom_line(data = results_train, aes(x = Timestamp, y = Actual, color = "Actual Train")) +  # Plot actual values for training data
+  geom_line(data = results_train, aes(x = Timestamp, y = Predicted, color = "Predicted Train")) +  # Plot predicted values for training data
+  geom_line(data = results_test, aes(x = Timestamp, y = Actual, color = "Actual Test")) +  # Plot actual values for test data
+  geom_line(data = results_test, aes(x = Timestamp, y = Predicted, color = "Predicted Test")) +  # Plot predicted values for test data
+  labs(title = "Actual vs Predicted Weighted Price",
+       x = "Timestamp",
+       y = "Weighted Price (USD)") +
+  scale_color_manual(values = c("Actual Train" = "blue", "Predicted Train" = "red", "Actual Test" = "green", "Predicted Test" = "purple")) +  # Define colors for the lines
+  theme_minimal()  # Apply a minimal theme
+
+```
+
