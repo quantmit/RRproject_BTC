@@ -1060,3 +1060,31 @@ cat("Training MAE:", train_mae, "\n")
 13. **Number of Features**:
     -   Total features: 2.
 
+
+
+```{r}
+
+# Extract the components, excluding the handle
+#model_info <- list(
+ # Raw_data_length = length(model.boost$raw),
+  #Best_iteration = model.boost$best_iteration,
+  #Best_ntreelimit = model.boost$best_ntreelimit,
+  #Best_score = model.boost$best_score,
+  #Best_msg = model.boost$best_msg,
+  #Niter = model.boost$niter,
+  ##Evaluation_log = paste(capture.output(print(model.boost$evaluation_log)), collapse = "\n"),
+  #Call = deparse(model.boost$call),
+  #Params = paste(capture.output(print(model.boost$params)), collapse = "\n"),
+  ##Callbacks = paste(capture.output(print(model.boost$callbacks)), collapse = "\n"),
+  ##Feature_names = paste(model.boost$feature_names, collapse = ", "),
+  #Nfeatures = model.boost$nfeatures
+#)
+
+# Convert the list to a data frame
+#model_info_df <- as.data.frame(model_info, stringsAsFactors = FALSE)
+
+# Print the data frame
+#print(model_info_df)
+
+
+```
