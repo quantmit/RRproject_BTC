@@ -1701,3 +1701,13 @@ library(TSA)
 adf_test <- ur.df(ts_data_month, lags = 1, type = "drift")  # Adjust lags as needed
 summary(adf_test)
 ```
+
+
+
+#### 4. Stationarity Test
+
+```{r}
+# KPSS test (alternative to ADF test)
+kpss_test <- kpss.test(ts_data_month)
+print(kpss_test)
+```
