@@ -1031,3 +1031,32 @@ cat("Training MAE:", train_mae, "\n")
 
 ```
 
+### Model info
+
+1.  **Handle**:
+    -   Memory pointer to the model object.
+2.  **Raw Data Length**:
+    -   Size of the raw model data in bytes: 242841.
+3.  **Best Iteration**:
+    -   Iteration with the best performance: 100.
+4.  **Best Number of Trees**:
+    -   Number of trees at best iteration: 100.
+5.  **Best Score**:
+    -   Best evaluation metric value: 87.26642.
+6.  **Best Message**:
+    -   Information about the best iteration: `"[100]\ttrain-rmse:87.266420"`.
+7.  **Number of Iterations**:
+    -   Total training iterations: 100.
+8.  **Evaluation Log**:
+    -   Log of RMSE for each iteration, showing error decrease.
+9.  **Function Call**:
+    -   Call used to create the model, including key parameters like `params`, `data`, `nrounds`, etc.
+10. **Parameters**:
+    -   Key parameters: `objective` ("reg:squarederror"), `min_child_weight` (10), `booster` ("gbtree"), `colsample_bytree` (0.3), `learning_rate` (0.1), `max_depth` (5), `alpha` (10), `validate_parameters` (TRUE).
+11. **Callbacks**:
+    -   Functions for logging and early stopping during training.
+12. **Feature Names**:
+    -   Features used in the model: `["Timestamp", "Weighted_Price"]`.
+13. **Number of Features**:
+    -   Total features: 2.
+
