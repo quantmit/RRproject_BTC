@@ -814,3 +814,27 @@ data <- data %>%
 # Display the first few rows of the updated dataframe 'data'
 #head(data)
 ```
+
+
+
+```{r}
+# Load necessary libraries
+library(dplyr)
+library(zoo)
+
+# Remove timezone information (if present)
+data$Timestamp <- as.POSIXct(data$Timestamp, tz = "")  # This step removes timezone information
+
+# Group by hourly frequency, take the first observation per hour
+data <- data %>%
+  mutate(Timestamp = floor_date(Timestamp, unit = "hour")) %>%  # Floor 'Timestamp' to the nearest hour
+  group_by(Timestamp) %>%  # Group by 'Timestamp'
+  slice_head(n = 1) %>%  # Take the first row from each group
+  ungroup()  # Ungroup the data
+
+
+data$Weighted_Price <- na.locf(data$Weighted_Price)
+
+# Print or return processed data
+#head(data)
+```
