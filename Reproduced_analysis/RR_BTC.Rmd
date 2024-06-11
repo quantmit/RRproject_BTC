@@ -18,7 +18,6 @@ editor_options:
 
 ------------------------------------------------------------------------
 
-
 Bitcoin, introduced in 2009 by the mysterious Satoshi Nakamoto, stands as the pioneering cryptocurrency.
 It operates on a decentralized peer-to-peer network, allowing secure and transparent transactions without the need for a central authority.
 Bitcoin's blockchain technology records every transaction in a public ledger, ensuring immutability and trustworthiness through cryptographic hashing.
@@ -37,17 +36,12 @@ This project draws inspiration from notable kernels and tutorials, including tho
 
 For those new to Bitcoin, you can learn more about its fundamentals [here](https://www.coindesk.com/information/what-is-bitcoin).
 
-
-
 ------------------------------------------------------------------------
-
-
-
-
 
 # Checking out the dataset in my data folder
 
-From the code below  we set a default data folder we run the code and list the data files in the folder. For our case, it's
+From the code below we set a default data folder we run the code and list the data files in the folder.
+For our case, it's
 
 -   "bitstampUSD_1-min_data_2012-01-01_to_2018-11-11.csv"
 
@@ -80,8 +74,6 @@ packages <- c("tidyverse", "plotly", "lubridate", "readr", "dplyr", "zoo", "ggpl
 lapply(packages, require, character.only = TRUE)
 ```
 
-
-
 ## Data importation
 
 -   **The data importation utilizes the read_csv function from the readr library. our Data has a Timestamp which will be converted to readable form with the code line `mutate(Timestamp = as.POSIXct(Timestamp, origin = "1970-01-01", tz = "UTC"))`**
@@ -113,8 +105,6 @@ data <- data %>%
 
 ```
 
-
-
 ### Summary Statistics
 
 Summary statistics display the minimum and maximum values, explaining the range.
@@ -125,13 +115,9 @@ The summary also highlights the total number of missing variables in each column
 summary(data)
 ```
 
-
-
 ## Data Cleaning
 
 ### Data handling Comparison with python
-
-
 
 | **`R Code`**                                                                      | **`Python Code`**                                                                      |
 |-------------------------------------|-----------------------------------|
@@ -215,7 +201,6 @@ data <- data %>%
 #head(data)
 ```
 
-
 ### Getting weekly data
 
 -   The code below groups the data by weeks where we create weekly groupings every 7 days from the date `2015-01-01 00:00:00` to `2018-11-11 00:00:00`. after this, we display the weekly data created and stored as weekly_rows
@@ -241,8 +226,6 @@ weekly_rows <- filtered_data %>%
 
 ```
 
-
-
 ## Vizualizations
 
 ### Let's visualize Historical Bitcoin Market Volume (2015-2018)-Yearly
@@ -255,7 +238,8 @@ The interactive plot takes in arguments of labels for 1 month 6month and 12 mont
 ![python output](newplot2.png) ![R output](newplot.png)
 
 The Python output doesn't distinguish the open-closed and weighted_price clearly in the plot.
-Although the plots interactively match that of R programming, we see a superiority of the R language in handling the visualizations in a more versatile manner by creating multiple facets for each column while still maintaining the same x and y axis. The plots on the other hand show a rising trend in Bitcoin and a drop in 2018 onwards.
+Although the plots interactively match that of R programming, we see a superiority of the R language in handling the visualizations in a more versatile manner by creating multiple facets for each column while still maintaining the same x and y axis.
+The plots on the other hand show a rising trend in Bitcoin and a drop in 2018 onwards.
 
 ```{r}
 # Create the traces for each line plot
@@ -288,10 +272,10 @@ fig1 <- fig %>% layout(
 fig1
 ```
 
-
 ### Let's visualize Historical Bitcoin Prices (2015-2018) - Monthly
 
-This code functions exactly as the previous one. The plot shows a spike in prices every October - December for each year.
+This code functions exactly as the previous one.
+The plot shows a spike in prices every October - December for each year.
 This can only be noticed when hovering over the plots and the interactivity becomes active.
 
 #### Comparison with python plot
@@ -347,7 +331,6 @@ There is a cluster of Volumes at specific prices.
 -   December 28th 2017, The price of bitcoins fell after South Korea announced additional measures to regulate bitcoin trading, including the potential closure of exchanges, among the volatile movements in the world's third largest cryptocurrency market.
 -   October 31st 2018, USD 6,300, on the 10 year anniversary of Bitcoin, price holds steady above USD 6,000 during a period of historically low volatility.
 
-
 #### Comparison with python plot
 
 ![Volume plot from python](newplotvol.png)
@@ -355,7 +338,6 @@ There is a cluster of Volumes at specific prices.
 ![volume plot in R](newplotvol.png)
 
 These two plots are simmilar making both languages easier to handle for this kind of plot.
-
 
 ```{r}
 library(plotly)     # Load the plotly package for interactive plots
@@ -377,8 +359,6 @@ fig3 <- trace %>% layout(
 fig3
 ```
 
-
-
 # Timeserires Forecasting
 
 **Time Series Forecasting** An experimental set of data that has been seen at various times is called a time series (typically equally spaced, as once a day, once an hour, or once a minute).
@@ -397,8 +377,6 @@ All the models used in this Kernel are very basic, there is scope of more comple
 -   Time Series forecasting with XGBoost
 -   Time Series forecasting with Facebook Prophet
 -   Time Series forecasting with ARIMA
-
-
 
 ## Prediction using LSTM
 
@@ -450,7 +428,6 @@ Here's the mathematical formulation of the LSTM model:
 -   **Sigmoid Activation (σ)**: Scales input values between 0 and 1, controlling the flow of information through gates.
 -   **Hyperbolic Tangent (tanh)**: Squashes input values between -1 and 1, regulating the cell state update and output.
 
-
 ### Data importaion
 
 This segment is same as the previous codes here now we start omitting the missing values to help in making the analysis more concrete.
@@ -485,8 +462,6 @@ data <- data %>%
 #head(data)  # Display the first few rows of 'data'
 ```
 
-
-
 **For the train and test, we take '25-Jun-2018' as the split date. There was a considerable dip in Bitcoin prices between the June-July period 2018. If we check the historical prices the seasonal market started going up from this date after reaching the lowest, though the price reached much lower \$5972 on June 29th 2018. After reaching the historic 20K mark on December 18th, there were several dips and market price was recorrected every time. Read more about [Bitcoin dips.](http://https://news.bitcoin.com/data-reveals-reasons-behind-bitcoins-big-dip/)**
 
 ```{r}
@@ -513,7 +488,6 @@ data_train <- data %>%
 
 ```
 
-
 ```{r}
 # Define the color palette
 color_pal <- c("#F8766D", "#D39200", "#93AA00", "#00BA38", "#00C19F", "#00B9E3", "#619CFF", "#DB72FB")
@@ -532,7 +506,6 @@ ggsave("btc_price_plo0t.png", width = 12, height = 6, dpi = 300)  # Adjust width
 
 
 ```
-
 
 ```{r, warning=FALSE}
 # Convert 'Timestamp' to POSIXct for proper datetime handling
@@ -562,7 +535,6 @@ ggplot(joined_data, aes(x = Timestamp)) +  # Define x-axis as 'Timestamp'
 
 ```
 
-
 ### We will use a Vanilla LSTM here for forecasting. The model is trained on pre 25-Jun-2018 data.
 
 #### Python R Comparison
@@ -572,7 +544,6 @@ ggplot(joined_data, aes(x = Timestamp)) +  # Define x-axis as 'Timestamp'
 In R here we used self-made functions and in Python libraries were utilized.
 Utilizing libraries in r would have meant creating a virtual python environment to utilize Keras libraries.
 This would have meant using the same python code again.
-
 
 ```{r}
 library(ggplot2)
@@ -697,7 +668,6 @@ model <- SimpleLSTM(input_shape, units)
 train(model, X_train, y_train, epochs = 10, lr = 0.001)
 ```
 
-
 ```{r}
 # Prepare test data for prediction
 X_test <- array(testing_set[-length(testing_set)], dim = c(length(testing_set) - 1, 1, 1))
@@ -732,12 +702,9 @@ ggplot(plot_data, aes(x = data$Timestamp[1:length(plot_data$Actual)] )) +
 
 ```
 
-
-
 #### Comparison with Python
 
-![](/home/dragon/Pictures/lstm.png)
-
+![](lstm.png)
 
 ## XGBOOST
 
@@ -752,8 +719,6 @@ cat("\014")
 rm(list = ls())
 ```
 
-
-
 #### Load packages afresh
 
 ```{r, message=FALSE, results='hide'}
@@ -762,7 +727,6 @@ packages <- c("tidyverse", "plotly", "lubridate", "readr", "dplyr", "zoo", "ggpl
 # Use lapply to load each package
 lapply(packages, library, character.only = TRUE)
 ```
-
 
 ```{r}
 # Define a function to parse timestamps from seconds since the Unix epoch
@@ -815,8 +779,6 @@ data <- data %>%
 #head(data)
 ```
 
-
-
 ```{r}
 # Load necessary libraries
 library(dplyr)
@@ -839,8 +801,6 @@ data$Weighted_Price <- na.locf(data$Weighted_Price)
 #head(data)
 ```
 
-
-  
 ```{r}
 # Load necessary libraries
 library(ggplot2)
@@ -964,9 +924,6 @@ plot11
 #grid.arrange(plot11, plot12, ncol = 2)
 ```
 
-
-
-
 #### Model
 
 ```{r}
@@ -1008,7 +965,6 @@ summary(model.boost)
 model.boost$params
 model.boost$best_score
 ```
-
 
 ### MAE and MSE
 
@@ -1060,8 +1016,6 @@ cat("Training MAE:", train_mae, "\n")
 13. **Number of Features**:
     -   Total features: 2.
 
-
-
 ```{r}
 
 # Extract the components, excluding the handle
@@ -1089,9 +1043,7 @@ cat("Training MAE:", train_mae, "\n")
 
 ```
 
-
-
-## Prediction : 
+## Prediction :
 
 ```{r}
 # Load necessary libraries
@@ -1159,9 +1111,9 @@ p
 
 ### Forecasting ahead
 
-#### Comparison of forecast with Python : 
+#### Comparison of forecast with Python :
 
-![python forecast](/home/dragon/Pictures/forecast.png)
+![python forecast](forecast.png)
 
 ```{r}
 # Load necessary libraries
@@ -1247,10 +1199,9 @@ ggplot() +
 
 ```
 
-
 #### XGBOOST MODEL explanation
 
-##### In Rstudio: 
+##### In Rstudio:
 
 The XGBoost model's output metrics indicate its performance on the training data.
 
@@ -1264,9 +1215,7 @@ An MAE of 33.55001 signifies the average absolute error in predictions.
 Both metrics are essential for evaluating model performance, with MSE being more influenced by larger errors and MAE providing a straightforward average error magnitude.
 Lower values for both metrics indicate a better fit of the model to the training data.
 
-
-
-#### In Python: 
+#### In Python:
 
 The significant difference in Mean Squared Error (MSE) and Mean Absolute Error (MAE) between the XGBoost models run in R and Python suggests that one of the implementations might have issues or differences in data processing or model setup.
 Here’s an analysis to help decide which language might be better based on these metrics:
@@ -1280,7 +1229,6 @@ Here’s an analysis to help decide which language might be better based on thes
     -   MSE: 484476.69
     -   MAE: 474.81
 
-
 ### Interpretation:
 
 -   **MSE (Mean Squared Error)** measures the average squared difference between the actual and predicted values. A lower MSE indicates better model performance.
@@ -1290,7 +1238,6 @@ Here’s an analysis to help decide which language might be better based on thes
 
 -   The model in R has significantly lower MSE and MAE values compared to the Python model.
 -   This suggests that the R model is performing much better, predicting closer to the actual values than the Python model.
-
 
 ### Possible Reasons for Differences:
 
@@ -1331,8 +1278,6 @@ data <- data %>%
 #print(data)  # Output the cleaned and processed data frame
 ```
 
-
-
 ```{r}
 library(ggplot2)
 
@@ -1348,8 +1293,6 @@ ggplot(data, aes(x = Timestamp, y = Weighted_Price)) +
   scale_x_datetime(date_breaks = "960 hour", date_labels = "%Y-%m-%d %H:%M")  # Set breaks and format for datetime x-axis
 ```
 
-
-
 ```{r}
 # Assuming 'data' is your dataset with 'Timestamp' as a column
 
@@ -1363,8 +1306,6 @@ split_date <- as.POSIXct("2018-06-25")
 data_train <- data[data$Timestamp <= split_date, ]
 data_test <- data[data$Timestamp > split_date, ]
 ```
-
-
 
 ```{r}
 library(dplyr)
@@ -1388,8 +1329,6 @@ plt_hrsly <- ggplot(data_hourly, aes(x = Timestamp, y = Weighted_Price)) +
 plt_hrsly
 
 ```
-
-
 
 ## Model
 
@@ -1416,8 +1355,6 @@ summary(model)
 #head(predict(model_fit))
 ```
 
-
-
 ```{r}
 # Load required libraries
 library(prophet)
@@ -1428,8 +1365,6 @@ forecast <- predict(model_fit, future)
 # Plotting predicted vs actual and future forecasted values
 plot(model_fit, forecast)
 ```
-
-
 
 #### Prophet RMSE MAE
 
@@ -1455,7 +1390,6 @@ cat("RMSE:", rmse_value, "\n")
 
 ```
 
-
 #### MAE MSE explanation:
 
 The Prophet model's MAE (625.8949) indicates an average prediction error of about 625.89 units, showing how much predictions deviate from actual values on average.
@@ -1468,11 +1402,10 @@ The model trained with Prophet in R has an MAE of 625.8949 and an RMSE of 1025.9
 Since both MAE and RMSE are significantly lower for the Prophet model, it indicates better prediction accuracy and fewer large errors.
 Thus, the Prophet model in R is the better choice for this dataset.
 
-
-
 # Arima
 
 ## Daily data
+
 ```{r}
 library(ggplot2)
 # Filter data_train to start from '2014-12-01' and convert to time series format (ts)
@@ -1507,7 +1440,6 @@ ljung_box <- Box.test(ts_data, lag = 20, type = "Ljung-Box")
 print(ljung_box)
 ```
 
-
 ## PACF
 
 ### Interpreting the PACF Plot
@@ -1521,21 +1453,17 @@ print(ljung_box)
 4.  **Bars**:
     -   The vertical bars represent the partial autocorrelation values at different lags. If a bar extends beyond the significance bounds, it indicates a significant partial autocorrelation at that lag.
 
-
-
 ### Key Observations from the Plot
 
 -   **Significant Lags**:
     -   The plot shows that the first lag (very close to 0.014) has a significant positive partial autocorrelation, as indicated by the bar extending beyond the upper significance bound.
     -   Subsequent lags are within the significance bounds, suggesting that they do not have significant partial autocorrelation values.
 
-
 ### Implications
 
 -   The significant partial autocorrelation at the first lag suggests that after differentiation, the time series data has a significant relationship with its immediate past value.
 -   This can imply that a simple autoregressive model of order 1 (AR(1)) may be sufficient to model the differentiated series. The differentiation has likely removed any higher-order correlations that were present in the original non-stationary series.
 -   If the original series was an integrated series of order 1 (i.e., needed one differentiation to become stationary), this PACF plot of the differentiated series indicates that it is now a stationary AR(1) process.
-
 
 ```{r}
 # Differentiate the time series data
@@ -1549,7 +1477,6 @@ pacf_plot <- pacf(diff_ts_data, lag.max = 5)
 plot(pacf_plot, main = "Partial Autocorrelation Function (PACF) of Differentiated Time Series")
 
 ```
-
 
 ## ACF
 
@@ -1565,8 +1492,6 @@ acf_plot <- acf(diff_ts_data, lag.max = 5)
 plot(acf_plot, main = "Autocorrelation Function (ACF) of Differentiated Time Series")
 ```
 
-
-
 ## Stationarity test
 
 The Augmented Dickey-Fuller test statistic is -2.8671 with a p-value of 0.2113, indicating insufficient evidence to reject the null hypothesis of non-stationary in the time series data.
@@ -1579,7 +1504,6 @@ adf_test <- adf.test(ts_data)
 adf_test
 
 ```
-
 
 ## ARIMA Model
 
@@ -1608,7 +1532,6 @@ autoplot(forecast_results)
 #summary(arima_model)
 ```
 
-
 ## Monthly Data
 
 ```{r}
@@ -1628,8 +1551,6 @@ ts_data_month <- ts(monthly_data$Weighted_Price, start = c(min(monthly_data$year
 #print(ts_data_month)
 ```
 
-
-
 ### Plot and Summary
 
 ```{r}
@@ -1641,7 +1562,6 @@ plot(ts_data_month, main = "Monthly Time Series Plot")
 ```
 
 To perform decomposition, ACF, PACF, ADF test, stationarity test, ARIMA modeling, forecasting, and plotting for your monthly time series data `ts_data_month`, here's a structured approach in R:
-
 
 #### 1. Decomposition
 
@@ -1672,8 +1592,6 @@ decomp <- decompose(ts_data_month)
 plot(decomp)
 ```
 
-
-
 #### 2. ACF (Autocorrelation Function) and PACF (Partial Autocorrelation Function)
 
 The PACF plot suggests that an auto regressive model of order 1 (AR(1)) might be appropriate for this time series since only the first lag shows a significant partial autocorrelation.
@@ -1690,7 +1608,6 @@ pacf_plot <- pacf(ts_data_month, lag.max = 5)
 plot(pacf_plot, main = "Partial Autocorrelation Function (PACF)")
 ```
 
-
 #### 3. Augmented Dickey-Fuller (ADF) Test for Stationarity
 
 ```{r}
@@ -1702,8 +1619,6 @@ adf_test <- ur.df(ts_data_month, lags = 1, type = "drift")  # Adjust lags as nee
 summary(adf_test)
 ```
 
-
-
 #### 4. Stationarity Test
 
 ```{r}
@@ -1711,8 +1626,6 @@ summary(adf_test)
 kpss_test <- kpss.test(ts_data_month)
 print(kpss_test)
 ```
-
-
 
 #### 5. ARIMA Modeling
 
