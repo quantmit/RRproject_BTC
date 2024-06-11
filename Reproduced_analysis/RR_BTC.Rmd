@@ -1415,3 +1415,16 @@ summary(model_fit$extra_regressors)
 summary(model)
 #head(predict(model_fit))
 ```
+
+
+
+```{r}
+# Load required libraries
+library(prophet)
+library(dplyr)
+# Optionally, make future predictions
+future <- make_future_dataframe(model_fit, periods = 365)  # Forecasting for the next 365 days
+forecast <- predict(model_fit, future)
+# Plotting predicted vs actual and future forecasted values
+plot(model_fit, forecast)
+```
