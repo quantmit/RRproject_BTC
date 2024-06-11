@@ -1579,3 +1579,31 @@ adf_test <- adf.test(ts_data)
 adf_test
 
 ```
+
+
+## ARIMA Model
+
+The ARIMA(0,1,0) model for 'ts_data' uses first-order differencing.
+It has RMSE of 295.0036 and MAE of 125.1681, indicating moderate predictive accuracy and low residual autocorrelation (ACF1 = -0.0183).
+
+```{r}
+# Fit ARIMA model
+library(forecast)
+
+arima_model <- auto.arima(ts_data)
+#summary(arima_model)
+# Forecast future values
+forecast_results <- forecast(arima_model, h = 365)  # Forecasting for 365 days into the future
+
+# Extract mean forecast and prediction intervals
+forecast_df <- data.frame(date = time(forecast_results$mean),
+                          mean = forecast_results$mean)
+
+# Check if lower and upper prediction intervals are available
+if ("lower" %in% colnames(forecast_results) && "upper" %in% colnames(forecast_results)) {
+  forecast_df <- cbind(forecast_df, lower = forecast_results$lower, upper = forecast_results$upper)
+}
+
+autoplot(forecast_results)
+#summary(arima_model)
+```
