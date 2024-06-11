@@ -1428,3 +1428,29 @@ forecast <- predict(model_fit, future)
 # Plotting predicted vs actual and future forecasted values
 plot(model_fit, forecast)
 ```
+
+
+
+#### Prophet RMSE MAE
+
+```{r}
+library(prophet)
+library(dplyr)
+library(Metrics)
+
+# Merge the forecast with the actual data for evaluation
+actual_vs_predicted <- data_train %>%
+  left_join(forecast, by = "ds") %>%
+  select(ds, y, yhat) %>%
+  na.omit()  # Remove rows with NA values
+
+# Calculate MAE and RMSE
+mae_value <- mae(actual_vs_predicted$y, actual_vs_predicted$yhat)
+rmse_value <- rmse(actual_vs_predicted$y, actual_vs_predicted$yhat)
+
+# Print model summary and performance metrics
+#summary(model_fit)
+cat("MAE:", mae_value, "\n")
+cat("RMSE:", rmse_value, "\n")
+
+```
