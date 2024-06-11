@@ -1711,3 +1711,13 @@ summary(adf_test)
 kpss_test <- kpss.test(ts_data_month)
 print(kpss_test)
 ```
+
+
+
+#### 5. ARIMA Modeling
+
+```{r}
+# Fit ARIMA model
+arima_model <- auto.arima(ts_data_month)
+#summary(arima_model)
+```
