@@ -1247,3 +1247,19 @@ ggplot() +
 
 ```
 
+
+#### XGBOOST MODEL explanation
+
+##### In Rstudio: 
+
+The XGBoost model's output metrics indicate its performance on the training data.
+
+**Training MSE (17614.23)**: Mean Squared Error (MSE) measures the average of the squared differences between the predicted and actual values.
+It is more sensitive to large errors due to the squaring operation, providing a higher penalty for larger errors.
+An MSE of 17614.23 indicates the average squared prediction error.
+
+**Training MAE (33.55001)**: Mean Absolute Error (MAE) calculates the average of the absolute differences between predicted and actual values, giving equal weight to all errors.
+An MAE of 33.55001 signifies the average absolute error in predictions.
+
+Both metrics are essential for evaluating model performance, with MSE being more influenced by larger errors and MAE providing a straightforward average error magnitude.
+Lower values for both metrics indicate a better fit of the model to the training data.
