@@ -1671,3 +1671,21 @@ decomp <- decompose(ts_data_month)
 # Plot decomposition
 plot(decomp)
 ```
+
+
+
+#### 2. ACF (Autocorrelation Function) and PACF (Partial Autocorrelation Function)
+
+The PACF plot suggests that an auto regressive model of order 1 (AR(1)) might be appropriate for this time series since only the first lag shows a significant partial autocorrelation.
+If higher-order lags had shown significant partial autocorrelation, it would suggest considering a higher-order AR model.
+In summary, this PACF plot indicates that the time series likely has a significant autocorrelation at lag 1, suggesting the use of an AR(1) model for further analysis.
+
+```{r}
+# ACF plot
+acf_plot <- acf(ts_data_month, lag.max = 5)
+plot(acf_plot, main = "Autocorrelation Function (ACF)")
+
+# PACF plot
+pacf_plot <- pacf(ts_data_month, lag.max = 5)
+plot(pacf_plot, main = "Partial Autocorrelation Function (PACF)")
+```
