@@ -1495,5 +1495,14 @@ random <- decomp$random
 # Remove seasonal and trend components from the original time series data
 detrended <- ts_data - seasonal - trend
 #autoplot(detrended, title = "ts without seasonality and trend")
+```
 
+## LJUNG BOX
+
+The Box-Ljung test indicates significant autocorrelation in the time series data, rejecting the null hypothesis of no autocorrelation.
+
+```{r}
+# Perform Ljung-Box test for autocorrelation
+ljung_box <- Box.test(ts_data, lag = 20, type = "Ljung-Box")
+print(ljung_box)
 ```
