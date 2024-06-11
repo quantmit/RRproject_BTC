@@ -1564,3 +1564,18 @@ plot(diff_ts_data, main = "Differentiated Time Series")
 acf_plot <- acf(diff_ts_data, lag.max = 5)
 plot(acf_plot, main = "Autocorrelation Function (ACF) of Differentiated Time Series")
 ```
+
+
+
+## Stationarity test
+
+The Augmented Dickey-Fuller test statistic is -2.8671 with a p-value of 0.2113, indicating insufficient evidence to reject the null hypothesis of non-stationary in the time series data.
+
+```{r}
+library(tseries)
+
+# Augmented Dickey-Fuller Test for stationarity
+adf_test <- adf.test(ts_data)
+adf_test
+
+```
