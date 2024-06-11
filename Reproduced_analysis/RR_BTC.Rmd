@@ -59,7 +59,7 @@ This file has the daily data from 2014 first of January to 2018 eleventh of Nove
 
 ```{r, message=FALSE}
 # Set the directory path where the data is located
-data_dir <- "~/Git/Data"
+data_dir <- "../../data"
 
 # List files in the directory specified by data_dir
 dir_contents <- list.files(data_dir)
@@ -99,10 +99,10 @@ dateparse <- function(time_in_secs) {
 }
 
 # Expand the tilde to the home directory and specify the file path
-file_path <- "~/Git/Data/coinbaseUSD_1-min_data_2014-12-01_to_2018-11-11.csv"
+file_path <- "../../data/coinbaseUSD_1-min_data_2014-12-01_to_2018-11-11.csv"
 
 # Read the CSV file into a data frame named 'data'
-data <- read_csv("~/Git/Data/coinbaseUSD_1-min_data_2014-12-01_to_2018-11-11.csv")
+data <- read_csv("../../data/coinbaseUSD_1-min_data_2014-12-01_to_2018-11-11.csv")
 
 # Convert the 'Timestamp' column from numeric Unix timestamps to POSIXct date-time objects
 data <- data %>%
@@ -456,7 +456,7 @@ Here's the mathematical formulation of the LSTM model:
 This segment is same as the previous codes here now we start omitting the missing values to help in making the analysis more concrete.
 
 ```{r, message=FALSE}
-data <- read_csv("~/Git/Data/bitstampUSD_1-min_data_2012-01-01_to_2018-11-11.csv")  # Read CSV data into 'data' dataframe
+data <- read_csv("../../data/bitstampUSD_1-min_data_2012-01-01_to_2018-11-11.csv")  # Read CSV data into 'data' dataframe
 data <- data %>% 
   mutate(Timestamp = as.POSIXct(Timestamp, origin = "1970-01-01", tz = "UTC"))  # Convert 'Timestamp' to POSIXct with UTC timezone
 
@@ -771,7 +771,7 @@ dateparse <- function(time_in_secs) {
 }
 
 # Replace with your actual file path to the CSV file
-file_path <- '~/Git/Data/coinbaseUSD_1-min_data_2014-12-01_to_2018-11-11.csv'
+file_path <- '../../data/coinbaseUSD_1-min_data_2014-12-01_to_2018-11-11.csv'
 
 # Read the CSV file into a data frame
 data <- read.csv(file_path)
