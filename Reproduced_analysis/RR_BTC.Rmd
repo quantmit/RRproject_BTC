@@ -1506,3 +1506,17 @@ The Box-Ljung test indicates significant autocorrelation in the time series data
 ljung_box <- Box.test(ts_data, lag = 20, type = "Ljung-Box")
 print(ljung_box)
 ```
+
+
+## PACF
+
+### Interpreting the PACF Plot
+
+1.  **Y-Axis (Partial ACF)**:
+    -   The y-axis represents the partial autocorrelation values. These values measure the correlation between the time series and its lagged values, with the effects of intermediate lags removed.
+2.  **X-Axis (Lag)**:
+    -   The x-axis represents the lag order. Each point on the plot corresponds to the partial autocorrelation at a specific lag.
+3.  **Horizontal Blue Lines**:
+    -   The horizontal blue lines are the significance bounds, typically set at approximately ±1.96/√N, where N is the number of observations in the time series. Values outside these bounds are considered statistically significant.
+4.  **Bars**:
+    -   The vertical bars represent the partial autocorrelation values at different lags. If a bar extends beyond the significance bounds, it indicates a significant partial autocorrelation at that lag.
