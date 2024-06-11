@@ -1303,3 +1303,30 @@ Therefore, for this specific task and data:
 
 -   **R** would be the better choice given the lower error metrics, indicating a better fit to the data.
 
+# PROPHET Forecasting
+
+```{r}
+library(dplyr)  # For data manipulation
+library(zoo)  # For the na.locf function (Last Observation Carried Forward)
+library(lubridate)  # For handling date/time data
+
+
+data <- data_na %>%
+  mutate(Timestamp = as.POSIXct(Timestamp, origin = "1970-01-01", tz = "UTC"))
+
+# Step 2: Group by hourly frequency and take the first value within each hour
+data <- data %>%
+  group_by(Timestamp = floor_date(Timestamp, unit = "hour")) %>%  # Group data by hour (round down to the nearest hour)
+  summarise(Weighted_Price = first(Weighted_Price)) %>%  # Summarize by taking the first 'Weighted_Price' within each hour
+  ungroup()  # Ungroup the data
+
+# Step 3: Set 'Timestamp' as the index and handle missing values
+data <- data %>%
+  mutate(Timestamp = as.POSIXct(Timestamp)) %>%  # Ensure 'Timestamp' is in POSIXct format
+  arrange(Timestamp) %>%  # Arrange the data by 'Timestamp' in ascending order
+  select(Timestamp, Weighted_Price) %>%  # Select only the 'Timestamp' and 'Weighted_Price' columns
+  mutate(Weighted_Price = na.locf(Weighted_Price))  # Fill missing values by carrying the last observation forward
+
+# Print the resulting data frame
+#print(data)  # Output the cleaned and processed data frame
+```
