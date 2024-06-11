@@ -1721,3 +1721,14 @@ print(kpss_test)
 arima_model <- auto.arima(ts_data_month)
 #summary(arima_model)
 ```
+
+#### 6. Forecasting
+
+```{r}
+# Forecast using ARIMA model
+forecast_values <- forecast(arima_model, h = 12)  # Forecasting 12 months ahead
+#print(forecast_values)
+
+# Plot forecasted values
+plot(forecast_values, main = "Forecasted Values")
+```
