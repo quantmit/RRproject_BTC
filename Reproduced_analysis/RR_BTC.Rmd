@@ -838,3 +838,64 @@ data$Weighted_Price <- na.locf(data$Weighted_Price)
 # Print or return processed data
 #head(data)
 ```
+
+
+  
+```{r}
+# Load necessary libraries
+library(ggplot2)
+
+# Define color palette
+color_pal <- c("#F8766D", "#D39200", "#93AA00", "#00BA38", "#00C19F", "#00B9E3", "#619CFF", "#DB72FB")
+
+# Plot using ggplot2
+ggplot(data, aes(x = Timestamp, y = Weighted_Price)) +
+  geom_line(color = color_pal[1]) +  # Adjust color based on your preference
+  labs(title = "BTC Weighted_Price Price (USD) by Hours with NA filled with 0 as original analysis") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +  # Rotate x-axis labels if needed
+  scale_x_datetime(date_labels = "%Y-%m-%d %H:%M") +  # Adjust date format on x-axis
+  labs(x = "Timestamp", y = "Weighted_Price (USD)") +
+  NULL  # Suppress the printing of the plot object in console
+data_na <- na.omit(data)
+data_na <- data_na %>%
+  filter(Weighted_Price > 0)
+
+ggplot(data_na, aes(x = Timestamp, y = Weighted_Price)) +
+  geom_line(color = color_pal[1]) +  # Adjust color based on your preference
+  labs(title = "BTC Weighted_Price Price (USD) by Hours with NA omited") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +  # Rotate x-axis labels if needed
+  scale_x_datetime(date_labels = "%Y-%m-%d %H:%M") +  # Adjust date format on x-axis
+  labs(x = "Timestamp", y = "Weighted_Price (USD)") +
+  NULL  # Suppress the printing of the plot object in console
+
+
+library(ggplot2)
+library(gridExtra)
+
+
+# Set the size of the plotting window (for example, in inches)
+x11(width = 25, height = 16) # Use quartz() on macOS or X11() on Linux
+# Create the first plot
+plot1 <- ggplot(data_na, aes(x = Timestamp, y = Weighted_Price)) +
+  geom_line(color = color_pal[1]) +  # Adjust color based on your preference
+  labs(title = "BTC Weighted_Price Price (USD) by Hours with NA omitted") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +  # Rotate x-axis labels if needed
+  scale_x_datetime(date_labels = "%Y-%m-%d %H:%M") +  # Adjust date format on x-axis
+  labs(x = "Timestamp", y = "Weighted_Price (USD)")
+
+# Create the second plot
+plot2 <- ggplot(data, aes(x = Timestamp, y = Weighted_Price)) +
+  geom_line(color = color_pal[1]) +  # Adjust color based on your preference
+  labs(title = "BTC Weighted_Price Price (USD) by Hours with NA filled with 0 as original analysis") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +  # Rotate x-axis labels if needed
+  scale_x_datetime(date_labels = "%Y-%m-%d %H:%M") +  # Adjust date format on x-axis
+  labs(x = "Timestamp", y = "Weighted_Price (USD)")
+
+# Arrange the two plots side by side
+#grid.arrange(plot1, plot2, ncol = 2)
+
+```
