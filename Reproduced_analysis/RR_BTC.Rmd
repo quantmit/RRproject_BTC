@@ -1388,3 +1388,30 @@ plt_hrsly <- ggplot(data_hourly, aes(x = Timestamp, y = Weighted_Price)) +
 plt_hrsly
 
 ```
+
+
+
+## Model
+
+```{r}
+
+# Load required libraries
+library(prophet)
+library(dplyr)
+
+# Convert data_train to proper format and rename columns
+data_train <- data_train %>%
+  mutate(ds = Timestamp, y = Weighted_Price) %>%
+  select(ds, y)
+
+# Setup and train model
+model <- prophet()  # Create a new Prophet model object
+model_fit <- fit.prophet(model, data_train)  # Fit the model to the training data
+
+# Optionally, make future predictions
+future <- data.frame(ds = seq(min(data_train$ds), max(data_train$ds) + days(365), by = "day"))
+future$ds <- as.POSIXct(future$ds)
+summary(model_fit$extra_regressors)
+summary(model)
+#head(predict(model_fit))
+```
