@@ -1263,3 +1263,19 @@ An MAE of 33.55001 signifies the average absolute error in predictions.
 
 Both metrics are essential for evaluating model performance, with MSE being more influenced by larger errors and MAE providing a straightforward average error magnitude.
 Lower values for both metrics indicate a better fit of the model to the training data.
+
+
+
+#### In Python: 
+
+The significant difference in Mean Squared Error (MSE) and Mean Absolute Error (MAE) between the XGBoost models run in R and Python suggests that one of the implementations might have issues or differences in data processing or model setup.
+Here’s an analysis to help decide which language might be better based on these metrics:
+
+### Metrics:
+
+-   **R Metrics**:
+    -   MSE: 17614.23
+    -   MAE: 33.55001
+-   **Python Metrics**:
+    -   MSE: 484476.69
+    -   MAE: 474.81
