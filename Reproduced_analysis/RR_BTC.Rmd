@@ -1454,3 +1454,16 @@ cat("MAE:", mae_value, "\n")
 cat("RMSE:", rmse_value, "\n")
 
 ```
+
+
+#### MAE MSE explanation:
+
+The Prophet model's MAE (625.8949) indicates an average prediction error of about 625.89 units, showing how much predictions deviate from actual values on average.
+The RMSE (1025.923) highlights a larger deviation, emphasizing that some predictions have significant errors.
+Both metrics help assess the model's accuracy.
+
+#### Comparison:
+
+The model trained with Prophet in R has an MAE of 625.8949 and an RMSE of 1025.923, while the Prophet model in Python has an MAE of 1678.49 and an MSE of 3654149.48.
+Since both MAE and RMSE are significantly lower for the Prophet model, it indicates better prediction accuracy and fewer large errors.
+Thus, the Prophet model in R is the better choice for this dataset.
