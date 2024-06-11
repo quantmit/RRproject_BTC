@@ -1467,3 +1467,20 @@ Both metrics help assess the model's accuracy.
 The model trained with Prophet in R has an MAE of 625.8949 and an RMSE of 1025.923, while the Prophet model in Python has an MAE of 1678.49 and an MSE of 3654149.48.
 Since both MAE and RMSE are significantly lower for the Prophet model, it indicates better prediction accuracy and fewer large errors.
 Thus, the Prophet model in R is the better choice for this dataset.
+
+
+
+# Arima
+
+## Daily data
+```{r}
+library(ggplot2)
+# Filter data_train to start from '2014-12-01' and convert to time series format (ts)
+ts_data <- data %>%
+  filter(Timestamp >= as.POSIXct("2014-12-01")) %>%
+  arrange(Timestamp) %>%
+  pull(Weighted_Price) %>%
+  ts(start = c(year(as.Date("2014-12-01")), month(as.Date("2014-12-01"))), frequency = 365)
+
+plot(decompose(ts_data))
+```
