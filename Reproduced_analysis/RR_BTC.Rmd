@@ -1627,3 +1627,18 @@ ts_data_month <- ts(monthly_data$Weighted_Price, start = c(min(monthly_data$year
 # Print the monthly time series data
 #print(ts_data_month)
 ```
+
+
+
+### Plot and Summary
+
+```{r}
+# Example: Plotting the time series
+plot(ts_data_month, main = "Monthly Time Series Plot")
+
+# Example: Computing statistics
+#summary(ts_data_month)
+```
+
+To perform decomposition, ACF, PACF, ADF test, stationarity test, ARIMA modeling, forecasting, and plotting for your monthly time series data `ts_data_month`, here's a structured approach in R:
+
