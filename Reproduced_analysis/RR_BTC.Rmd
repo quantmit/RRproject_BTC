@@ -899,3 +899,67 @@ plot2 <- ggplot(data, aes(x = Timestamp, y = Weighted_Price)) +
 #grid.arrange(plot1, plot2, ncol = 2)
 
 ```
+
+## Test and train data
+
+```{r}
+# Load necessary libraries
+library(dplyr)  # For data manipulation
+library(ggplot2)  # For data visualization
+
+# Convert 'Timestamp' to Date format (if it's POSIXct)
+data$Timestamp <- as.Date(data$Timestamp)  # Ensure the Timestamp column is in Date format
+
+# Define split date for training and testing sets
+split_date <- as.Date("2018-06-25")  # The date to split the data into training and testing sets
+
+# Split data into training set (before or on split_date) and select relevant columns
+data_train <- data %>% 
+  filter(Timestamp <= split_date) %>%  # Filter rows where Timestamp is on or before the split date
+  select(Timestamp, Weighted_Price)  # Select only the Timestamp and Weighted_Price columns
+
+# Split data into testing set (after split_date) and select relevant columns
+data_test <- data %>% 
+  filter(Timestamp > split_date) %>%  # Filter rows where Timestamp is after the split date
+  select(Timestamp, Weighted_Price)  # Select only the Timestamp and Weighted_Price columns
+
+# Split data into training set (before or on split_date) and select relevant columns
+data_train_na <- data %>% 
+  filter(Timestamp <= split_date, Weighted_Price > 0) %>%  # Filter rows where Timestamp is on or before the split date
+  select(Timestamp, Weighted_Price) %>% # Select only the Timestamp and Weighted_Price columns
+  na.omit()
+
+# Split data into testing set (after split_date) and select relevant columns
+data_test_na <- data %>% 
+  filter(Timestamp > split_date,Weighted_Price > 0) %>%  # Filter rows where Timestamp is after the split date
+  select(Timestamp, Weighted_Price) %>% # Select only the Timestamp and Weighted_Price columns
+  na.omit()
+
+# Plot the data using ggplot2
+plot12 <- ggplot() +
+  geom_line(data = data_test, aes(x = Timestamp, y = Weighted_Price, color = "Test Set with")) +  # Plot the testing set with a line
+  geom_line(data = data_train, aes(x = Timestamp, y = Weighted_Price, color = "Training Set")) +  # Plot the training set with a line
+  labs(title = "BTC Weighted_Price Price (USD) by Hours with NA and zero values") +  # Add a title to the plot
+  theme_minimal() +  # Use a minimal theme for the plot
+  scale_x_date(date_labels = "%Y-%m-%d %H:%M", date_breaks = "250 day") +  # Format the x-axis with dates and set breaks at every day
+  labs(x = "Timestamp", y = "Weighted_Price (USD)") +  # Label the x and y axes
+  scale_color_manual(values = c("Test Set" = "#F8766D", "Training Set" = "#00B9E3"))  # Set custom colors for the lines representing the test and training sets
+
+(plot12)
+
+# Plot the data using ggplot2
+plot11 <- ggplot() +
+  geom_line(data = data_test_na, aes(x = Timestamp, y = Weighted_Price, color = "Test Set with")) +  # Plot the testing set with a line
+  geom_line(data = data_train_na, aes(x = Timestamp, y = Weighted_Price, color = "Training Set")) +  # Plot the training set with a line
+  labs(title = "BTC Weighted_Price Price (USD) by Hours without NA and zero values") +  # Add a title to the plot
+  theme_minimal() +  # Use a minimal theme for the plot
+  scale_x_date(date_labels = "%Y-%m-%d %H:%M", date_breaks = "250 day") +  # Format the x-axis with dates and set breaks at every day
+  labs(x = "Timestamp", y = "Weighted_Price (USD)") +  # Label the x and y axes
+  scale_color_manual(values = c("Test Set" = "#F8766D", "Training Set" = "#00B9E3"))  # Set custom colors for the lines representing the test and training sets
+
+plot11
+
+
+# Arrange the two plots side by side
+#grid.arrange(plot11, plot12, ncol = 2)
+```
