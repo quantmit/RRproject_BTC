@@ -1520,3 +1520,11 @@ print(ljung_box)
     -   The horizontal blue lines are the significance bounds, typically set at approximately ±1.96/√N, where N is the number of observations in the time series. Values outside these bounds are considered statistically significant.
 4.  **Bars**:
     -   The vertical bars represent the partial autocorrelation values at different lags. If a bar extends beyond the significance bounds, it indicates a significant partial autocorrelation at that lag.
+
+
+
+### Key Observations from the Plot
+
+-   **Significant Lags**:
+    -   The plot shows that the first lag (very close to 0.014) has a significant positive partial autocorrelation, as indicated by the bar extending beyond the upper significance bound.
+    -   Subsequent lags are within the significance bounds, suggesting that they do not have significant partial autocorrelation values.
