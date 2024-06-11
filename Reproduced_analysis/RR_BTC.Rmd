@@ -1607,3 +1607,23 @@ if ("lower" %in% colnames(forecast_results) && "upper" %in% colnames(forecast_re
 autoplot(forecast_results)
 #summary(arima_model)
 ```
+
+
+## Monthly Data
+
+```{r}
+# Convert 'Timestamp' to Date format (if it's POSIXct)
+data$Timestamp <- as.Date(data$Timestamp)
+
+# Aggregate daily data to monthly averages (or sums if appropriate)
+monthly_data <- data %>%
+  group_by(year = year(Timestamp), month = month(Timestamp)) %>%
+  summarise(Weighted_Price = mean(Weighted_Price)) %>%
+  ungroup()
+
+# Create time series object (ts) from monthly aggregated data
+ts_data_month <- ts(monthly_data$Weighted_Price, start = c(min(monthly_data$year), min(monthly_data$month)), frequency = 12)
+
+# Print the monthly time series data
+#print(ts_data_month)
+```
