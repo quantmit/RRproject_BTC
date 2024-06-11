@@ -1483,4 +1483,17 @@ ts_data <- data %>%
   ts(start = c(year(as.Date("2014-12-01")), month(as.Date("2014-12-01"))), frequency = 365)
 
 plot(decompose(ts_data))
+
+# Decompose the time series to extract its components
+decomp <- decompose(ts_data)
+
+# Extract the seasonal, trend, and random (or residual) components
+seasonal <- decomp$seasonal
+trend <- decomp$trend
+random <- decomp$random
+
+# Remove seasonal and trend components from the original time series data
+detrended <- ts_data - seasonal - trend
+#autoplot(detrended, title = "ts without seasonality and trend")
+
 ```
