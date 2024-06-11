@@ -963,3 +963,48 @@ plot11
 # Arrange the two plots side by side
 #grid.arrange(plot11, plot12, ncol = 2)
 ```
+
+
+
+
+#### Model
+
+```{r}
+library(xgboost)
+# Convert 'Timestamp' column to numeric format (seconds since the Unix epoch) if necessary
+data_train$Timestamp <- as.numeric(as.POSIXct(data_train$Timestamp))
+
+# Convert the data frame to matrix format for XGBoost
+X_train <- as.matrix(data_train[, c("Timestamp", "Weighted_Price")])  # Select 'Timestamp' and 'Weighted_Price' columns and convert to matrix
+y_train <- data_train$Weighted_Price  # Extract the target variable 'Weighted_Price'
+
+# Create DMatrix, a special data structure in XGBoost for training
+dtrain <- xgb.DMatrix(data = X_train, label = y_train)  # Create a DMatrix with data and labels
+dtest <- xgb.DMatrix(data = X_train, label = y_train)
+# Define parameters for the XGBoost model
+params <- list(
+  objective = "reg:squarederror",  # Specify the objective function type for regression
+  min_child_weight = 10,  # Minimum sum of instance weight (hessian) needed in a child
+  booster = "gbtree",  # Use tree-based boosters
+  colsample_bytree = 0.3,  # Fraction of features to be used for each tree
+  learning_rate = 0.1,  # Step size shrinkage to prevent overfitting
+  max_depth = 5,  # Maximum depth of a tree
+  alpha = 10  # L1 regularization term on weights (lasso regression)
+)
+
+# Train the XGBoost model
+model.boost <- xgb.train(
+  params = params,  # Model parameters
+  data = dtrain,  # Training data
+  nrounds = 100,  # Number of boosting rounds
+  early_stopping_rounds = 50,  # Stop training if the performance doesn't improve for 50 rounds
+  maximize = FALSE,  # Minimize the evaluation metric (since this is regression)
+  watchlist = list(train = dtrain),  # List of data to evaluate on during training
+  verbose = 0  # Set to 1 to print training progress, 0 for silent mode
+)
+
+summary(model.boost)
+#model.boost$evaluation_log
+model.boost$params
+model.boost$best_score
+```
